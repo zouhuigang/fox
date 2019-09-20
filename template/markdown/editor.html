@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{{template "header" .}}
+  <script src="/static/markdown-editor/markdown-it.js"></script>
+  <script src="/static/markdown-editor/markdown-it-footnote.js"></script>
+   <script src="/static/markdown-editor/highlight.pack.js"></script>
+  <script src="/static/markdown-editor/emojify.js"></script>
+  <script src="/static/markdown-editor/codemirror/lib/codemirror.js"></script>
+  <script src="/static/markdown-editor/codemirror/overlay.js"></script>
+  <script src="/static/markdown-editor/codemirror/xml/xml.js"></script>
+  <script src="/static/markdown-editor/codemirror/markdown/markdown.js"></script>
+  <script src="/static/markdown-editor/codemirror/gfm/gfm.js"></script>
+  <script src="/static/markdown-editor/codemirror/javascript/javascript.js"></script>
+  <script src="/static/markdown-editor/codemirror/css/css.js"></script>
+  <script src="/static/markdown-editor/codemirror/htmlmixed/htmlmixed.js"></script>
+  <script src="/static/markdown-editor/codemirror/lib/util/continuelist.js"></script>
+  <script src="/static/markdown-editor/rawinflate.js"></script>
+  <script src="/static/markdown-editor/rawdeflate.js"></script>
+  <!-- <link rel="stylesheet" href="/static/markdown-editor/base16-light.css"> -->
+  <link rel="stylesheet" href="/static/markdown-editor/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="/static/markdown-editor/default.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+
+  <link rel="stylesheet" type="text/css" href="/static/css/editor/main.css">
+  <link rel="stylesheet" href="/static/css/markdown.css"/>
+  <style type="text/css">
+    body {margin: 0;background-color:#fafafa}
+
+    .CodeMirror pre{
+	  font-size:18px;
+    }
+
+    .CodeMirror {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: auto;
+      height: auto;
+    }
+
+    .CodeMirror-scroll {
+      padding: 1px;
+      box-sizing: border-box;
+    }
+
+    #out{
+      overflow: auto;
+      color: #444;
+      font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+      font-size: 16px;
+      width:100%;
+    }
+
+    #menu {
+      display: none;
+      position: fixed;
+      background-color: #111;
+      border-radius: 5px;
+      top: 50%;
+      left: 50%;
+      width: 250px;
+      height: 150px;
+      margin-top: -75px;
+      margin-left: -125px;
+      z-index: 99;
+      text-align: center;
+      color: white;
+    }
+
+    #menu > span {
+      display: block;
+      font-size: 1.5em;
+      line-height: 1.3;
+      margin-top: 0.25em;
+    }
+
+    #menu > div {
+      display: inline-block;
+      width: 100px;
+      text-align: center;
+      vertical-align: top;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    #menu > div:hover {
+      opacity: 1;
+    }
+
+    #menu svg {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto;
+      display: block;
+    }
+    #menu path {
+      fill: #fff;
+    }
+
+    #close-menu {
+      position: absolute;
+      top: 5px;
+      right: 9px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .emoji {
+      width: 1em;
+      height: 1em;
+      vertical-align: baseline;
+    }
+
+    
+
+
+    
+	
+	
+  </style>
+  
+  <!-- 工具栏-->
+ 
+</head>
+
+
+<body class="light">
+  
+
+
+
+           <div id="regex-app">
+    <div class="_2ITh2cBoYyH5V_zLOSi_E3" data-reactroot="" data-reactid="1">
+		{{/*header*/}}
+        <header class="qTp7noOcch-kSsmzxXFG5" data-reactid="2">
+            <a href="/" class="_1sfyyRUhk7HUNJeXF173vM _2sp9OOLebNEdOOK61Cfe5D _13CpkGfayBKT1-JqGK28sX _198Rl6kicxZQt0wb40T5xV"
+            data-reactid="3">
+                <span class="_1DpdrZJBwoZQHW5hHNCapI" data-reactid="4">
+                    <span class="_3WrivyY_lzDsTPRcxgvrvi" data-reactid="5">
+                        安橙网
+                    </span>
+                    <span class="_3Z8iV9r0cMU7tSQzK-oDPx" data-reactid="6">
+                        安
+                    </span>
+                </span>
+                <span class="pJLAEtl6mfMTWubEYGiQ4" data-reactid="7">
+                    <span class="_3WrivyY_lzDsTPRcxgvrvi" data-reactid="8">
+                        anooc
+                    </span>
+                    <span class="_3Z8iV9r0cMU7tSQzK-oDPx" data-reactid="9">
+                        橙
+                    </span>
+                </span>
+                <span class="_1UZVOZYLn7YZ-vGhPMTaIT" data-reactid="10">
+                    .com
+                </span>
+            </a>
+            <div class="HFUvgNks0iAl223Q7djmE" data-reactid="11">
+                <div class="_2PLNZuRfU4ebpEuZHqxnh1">
+                    <a href="/" class="_1sfyyRUhk7HUNJeXF173vM nF9oJiixLG_DK2AuB94C _3azOtSYQTPnJ4v4AZhtm3j">
+                        <div class="_2PNRJNNjA4_U0YygXkoknR PN5nC82Y_XkBlmPtcKrO1 _2R3D9EyubEb8XGzAa49UBB">
+                        </div>
+                        <span class="_28LYxH1g6qw4FJEXCF3SX8">
+                            帮助文档
+                        </span>
+                    </a>
+                </div>
+                <div class="_2PLNZuRfU4ebpEuZHqxnh1">
+                    <a href="mailto:notifications@anooc.com" class="_1sfyyRUhk7HUNJeXF173vM nF9oJiixLG_DK2AuB94C _3N0HgGzZwsoToF3RCyOQKN">
+                        <div class="_2PNRJNNjA4_U0YygXkoknR _1isCJs4HwlsWfZ7fUdQRi8 _2R3D9EyubEb8XGzAa49UBB">
+                        </div>
+                        <span class="_28LYxH1g6qw4FJEXCF3SX8">
+                            意见&amp;建议
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <a class="_1sfyyRUhk7HUNJeXF173vM" href="/settings" data-reactid="27">
+                <div class="_3LSQHhQYoARGIit2BfWmHT _2fCJ4u_MIrnXARCShN5dUt _1m1geBxdSKal_AIT8vsq_J"
+                style="height:28px;width:28px;" data-reactid="28">
+                    <div class="_2PNRJNNjA4_U0YygXkoknR dcZD-qZIK9ddKTqy4tDbA _17VXWnNnO9aMXr1xfgNtMl"
+                    data-reactid="29">
+                    </div>
+                </div>
+            </a>
+            <div data-reactid="30">
+                <div class="_3LSQHhQYoARGIit2BfWmHT _2fCJ4u_MIrnXARCShN5dUt" style="height:28px;width:28px;"
+                data-reactid="31">
+                    <div class="_2PNRJNNjA4_U0YygXkoknR _3Y-lkcrVl14CcWKSlD-sU8 _17VXWnNnO9aMXr1xfgNtMl"
+                    data-reactid="32">
+                    </div>
+                </div>
+                <div data-reactid="33">
+                    <!-- react-empty: 34 -->
+                    <!-- react-empty: 35 -->
+                </div>
+            </div>
+        </header>
+		{{/*header end*/}}
+
+		{{/*最左边导航栏*/}}
+        <nav class="_2q2Gx55SPtNhsGLtKFPIkj">
+            <div class="_2eQHIINdLljKww0EIYmDds">
+                <a class="_1sfyyRUhk7HUNJeXF173vM _2Q760VqfC0Ys7sdehGKghg _3nfQ5NlPNi7arFxkD0ynvW"
+                href="/">
+                    <div class="_3LSQHhQYoARGIit2BfWmHT _1idGUcHCL_eIsqfMcee95b" style="height: 34px; width: 34px;">
+                        <div class="_2PNRJNNjA4_U0YygXkoknR _3UMi6giRuBI4hVmtmIBKcZ _17VXWnNnO9aMXr1xfgNtMl">
+                        </div>
+                    </div>
+                </a>
+                <a class="_1sfyyRUhk7HUNJeXF173vM _2Q760VqfC0Ys7sdehGKghg" href="/library">
+                    <div class="_3LSQHhQYoARGIit2BfWmHT _1idGUcHCL_eIsqfMcee95b" style="height: 34px; width: 34px;">
+                        <div class="_2PNRJNNjA4_U0YygXkoknR _2n-YBVaA69odu9p23gqirr _17VXWnNnO9aMXr1xfgNtMl">
+                        </div>
+                    </div>
+                </a>
+                <a href="/"
+                class="_1sfyyRUhk7HUNJeXF173vM _2Q760VqfC0Ys7sdehGKghg" target="_blank">
+                    <div class="_3LSQHhQYoARGIit2BfWmHT _1idGUcHCL_eIsqfMcee95b" style="height: 34px; width: 34px;">
+                        <div class="_2PNRJNNjA4_U0YygXkoknR _35hyPTfRXwu5xEi908klL_ _17VXWnNnO9aMXr1xfgNtMl">
+                        </div>
+                    </div>
+                </a>
+                <a href="/static/images/pay/a6x09780g0aa7qikjwmrb5e.png"
+                class="_1sfyyRUhk7HUNJeXF173vM _2Q760VqfC0Ys7sdehGKghg D-Unr_jeyuUc2-aLo8TqQ"
+                target="_blank">
+                    <div class="_3LSQHhQYoARGIit2BfWmHT _1idGUcHCL_eIsqfMcee95b" style="height: 34px; width: 34px;">
+                        <div class="_2PNRJNNjA4_U0YygXkoknR _1gxhRZ6PvwXlF5eJPebk_P _17VXWnNnO9aMXr1xfgNtMl">
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+			{{/*最左边导航栏end */}}
+
+			{{/*中间导航*/}}
+            <div class="_3tDL-nXDUv_D6JffhIbyrg">
+                <div>
+                    <div class="_1ksHKkk0gdugn1K2LKeXYC _1TLPwnsFOZQOYdERZfpvw9">
+                        <div class="_2pcE6sKlxu423STGpC7YoF _1XK4vqxxkvKi9S5zF73ae6 _2tmCKpyhs7lg0t3GNxaEyI _161o4P-ihkNKYMIfg9X0q4">
+                            <span class="_1XK4vqxxkvKi9S5zF73ae6">
+                                保存 &amp; 分享
+                            </span>
+                        </div>
+                        <ul class="_2v5h0jJVdp4aWiAZrbpBR0">
+                            <li class="_15gkkHL4bQv9sweLi1HhLx Ho90GtZdzVfFP9zS6OZyZ">
+                                <div class="_3FxKOsew291f4_tZ67BSSA _18IkeGhOznzNjFa-Zr14Zm _3U--RqcM3TT1pgudtjTFXS _3EYLoI6rCTy1MMUjFcOWCr">
+                                    <div class="_2PNRJNNjA4_U0YygXkoknR _2W2WwG3q2k-ThkDfnL2U1X _38v59lIlD-e0HH3on74oi6">
+                                    </div>
+                                    <div class="S8Y5s96GBvntJa9aGS70F">
+                                        保存文档
+                                    </div>
+                                    <div class="_28Jw2eppfH5brEFWIsmzrU">
+                                        ctrl+s
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="_1ksHKkk0gdugn1K2LKeXYC _1TLPwnsFOZQOYdERZfpvw9">
+                        <div class="_2pcE6sKlxu423STGpC7YoF _1XK4vqxxkvKi9S5zF73ae6 _2tmCKpyhs7lg0t3GNxaEyI _161o4P-ihkNKYMIfg9X0q4">
+                            <span class="_1XK4vqxxkvKi9S5zF73ae6">
+                                选择背景音乐
+                            </span>
+                        </div>
+                        <ul class="_2v5h0jJVdp4aWiAZrbpBR0"  id="bg-mp3">
+                            <li class="_15gkkHL4bQv9sweLi1HhLx" data-id="0">
+                                <div class="_3FxKOsew291f4_tZ67BSSA _18IkeGhOznzNjFa-Zr14Zm">
+                                    <div class="_2PNRJNNjA4_U0YygXkoknR _3UMi6giRuBI4hVmtmIBKcZ _38v59lIlD-e0HH3on74oi6">
+                                    </div>
+                                    <div class="_2fu3EvuSxkRWBPBgPUk19_ _2qFpLQL4m3cyei3AiQBFsn">
+                                        <!-- react-text: 317 -->
+										无背景音乐									
+                                        <!-- /react-text -->
+										
+                                        <div class="_2PNRJNNjA4_U0YygXkoknR _2RuoFSLh7mJSxuKSstubYq _22-PtjvtC0DQ2_r5-t3Im7">
+                                        </div>
+									
+                                    </div>
+                                </div>
+                            </li>
+
+							{{range .mp3}}
+							<li class="_15gkkHL4bQv9sweLi1HhLx">
+                                <div class="_3FxKOsew291f4_tZ67BSSA _18IkeGhOznzNjFa-Zr14Zm">
+                                    <div class="_2PNRJNNjA4_U0YygXkoknR fa fa-music _38v59lIlD-e0HH3on74oi6">
+                                    </div>
+                                    <div class="_2fu3EvuSxkRWBPBgPUk19_"  data-id={{.Id}}>
+										{{.Name}}
+                                    </div>
+                                </div>
+                            </li>
+							{{end}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+		{{/*中间导航end*/}}
+
+        <div class="fy8GbuIIvEaS_N7sk3mu1" data-reactid="39">
+            <div class="sYX_BmGu1Q2YpJ6iwpzWy" data-reactid="40">
+				{{/*最右边预览*/}}
+                <div class="_1Eaxsugk1GMHhw_G_Sakho" id="view">
+                    <div class="_3gSSfZ3hwMZA59VsDyo3lX _3JyurpLIIZZJQJVUztIRx">
+                        <div class="_2pcE6sKlxu423STGpC7YoF _1XK4vqxxkvKi9S5zF73ae6 _2tmCKpyhs7lg0t3GNxaEyI _2YMI3cg9p9tab6hmvmNQ10 _3h7q5jpqSS-4fPJJ2GRDra EEcFf0Pl9fVTQ2ypBr1Qx">
+                            <span class="_1XK4vqxxkvKi9S5zF73ae6">
+                                实时预览
+                            </span>
+							<div class="_2PNRJNNjA4_U0YygXkoknR _1dER8gRAihsi8fpO33-Nhe _3v_zAVygGsgTOXKmtDSJoS">
+                              	
+							</div>
+                        </div>
+
+						 
+						{{/*预览中*/}}
+						<div class="markdown-body" style="width:100%;" id="out" >
+						</div>
+						{{/*预览中end*/}}
+                    </div>
+                </div>
+				{{/*最右边预览end*/}}
+
+
+                <div class="_1q2k8n2QYyM4_wuYDUk0Bi" data-reactid="44">
+                    <div class="RV9T4zYQcGPh62rDcGcvc" data-reactid="45">
+                        <div class="_2t_G5Rp6rzKOjr9UnP8y5d" data-reactid="46">
+                            <div class="_2pcE6sKlxu423STGpC7YoF _2tmCKpyhs7lg0t3GNxaEyI" data-reactid="47">
+                                <span class="" data-reactid="48">
+                                    文档标题
+                                </span>
+                                <!-- react-empty: 49 -->
+								{{if .kw}}
+								<a href="/f?kw={{.kw}}" style="color:#fff" target="_blank">
+                                <div class="_2owEqY-xWf_U1jFFlcqI5d _2ZM28uhMvE3uGLdbEFrt9h">
+                                    	{{.kw}}
+                                </div>
+								</a>
+								{{else}}
+									<a href="/f?kw=云笔记" style="color:#fff" target="_blank">
+										<div class="_2owEqY-xWf_U1jFFlcqI5d _2ZM28uhMvE3uGLdbEFrt9h">云笔记</div>
+									</a>
+								{{end}}
+
+                            </div>
+                        </div>
+                        <div class="_153v9-SP6cUs9BprA4Ph0D" data-reactid="51">
+                            <div class="oW_T9y-xJK-Hf35h-X90c" data-reactid="52">
+                                <div class="_3bjf5OqCBGbujQiS202L_Y" data-reactid="53">
+                                    <div class="_2PNRJNNjA4_U0YygXkoknR _19mNNdkaBe4zzVuaViflUC _3ZHnvyI9qKLTxEh-xFvE_p"
+                                    data-reactid="54">
+                                    </div>
+                                    <!-- react-text: 55 -->
+                                    /
+                                    <!-- /react-text -->
+                                </div>
+                                <!-- react-empty: 56 -->
+                            </div>
+                            <div class="_3kj4KjnA6bOdY-jIHq1CW7">
+                                <div class="editor-title">
+                                    <textarea id="title" autocomplete="off" ></textarea>                                 
+                                </div>
+                                <!-- react-empty: 60 -->
+                            </div>
+                            <div class="_3gUKCaF9nagr5wNzalO9xA" tabindex="2" data-reactid="61">
+                                <div class="_22YEWHKkEuexFPxT-dzE_D" data-reactid="62">
+                                    <div class="_3s7QJbkik2KPyi894Mazys" data-reactid="63">
+                                        /
+                                    </div>
+                                    <div class="_3odKeUMV0XHdGsSgqQm1So" data-reactid="64">
+                                        g
+                                    </div>
+                                    <div class="_2PNRJNNjA4_U0YygXkoknR W93ilSrfQizd6o19pGQh5 _16HX4O1jYMF4lmBDQ3Qica"
+                                    data-reactid="65">
+                                    </div>
+                                </div>
+                                <!-- react-empty: 66 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="_3933of441-HMLH-rTcm0u5" data-reactid="67">
+                        <div class="vUWkCNEZ5SVDkhrO3J8BN" data-reactid="68">
+                            <div class="_3KtAMHdR37QOXuecEKAkA1" data-reactid="69">
+                                <div class="_2pcE6sKlxu423STGpC7YoF _1XK4vqxxkvKi9S5zF73ae6 _2tmCKpyhs7lg0t3GNxaEyI _3EU8DhrA5K6VmhMXbMixji"
+                                data-reactid="70">
+                                    <span class="_1XK4vqxxkvKi9S5zF73ae6" data-reactid="71">
+                                        内容
+                                    </span>
+									<span class="edspan"><a href="javascript:;" title="新建文件" unselectable="on" id="fa-file-o"><i class="fa fa-file-o"></i></a></span>
+									<span class="edspan"><a href="javascript:;" title="打开文件" unselectable="on" id="fa-folder-open-o"><i class="fa fa-folder-open-o" aria-hidden="true"></i></a><input id="fa-folder-open-oinput" accept=".md" type="file" hidden></span>
+									<span class="edspan"><a href="javascript:;" title="保存" unselectable="on" id="fa-save"><i class="fa fa-save"></i></a></span>
+									<span class="edspan"><a href="javascript:;" title="粗体" unselectable="on" id="fa-bold"><i class="fa fa-bold" name="bold" unselectable="on"></i></a></span>
+									<span class="edspan"><a href="javascript:;" title="斜体" unselectable="on" id="fa-italic"><i class="fa fa-italic" name="italic" unselectable="on"></i></a></span>
+									<span class="edspan"><a href="javascript:;" title="标题1" unselectable="on" id="editormd-bold1"><i class="fa editormd-bold" name="h1" unselectable="on">H1</i></a></span>
+									<span class="edspan"><a href="javascript:;" title="标题2" unselectable="on" id="editormd-bold2"><i class="fa editormd-bold" name="h2" unselectable="on">H2</i></a></span>
+									<span class="edspan"><a href="javascript:;" title="预览文章" unselectable="on" id="fa-eye"><i class="fa fa-eye"></i></a></span>
+								
+
+
+                                    <div class="_3Teag2kOkZttJeJhjXeo64" data-reactid="72">
+                                        <a class="_3h_QSqGCKAXfnPUprP9IiN" href="javascript:;" id="ShowHideView">
+                                            <!-- react-text: 74 -->
+                                            展开/收起
+                                            <!-- /react-text -->
+                                            <div class="_2PNRJNNjA4_U0YygXkoknR pBWHe_z5iLushKp9sNU8Y _2-xT8Kj74wHl-fNNLL8UG2"
+                                            data-reactid="75">
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+							
+                                <div class="_137ysXnxaT-Fq7AI4jqxEO"  id="in">
+                                    <form id="codeForm">
+ 										<textarea id="code"></textarea>
+ 										<input type="hidden" name="id" id="id" value="0">
+									</form>
+                                </div>
+                            </div>
+							
+							{{/*最下面*/}}
+                            <div class="_3nOf6JqU8ymyFNS4AMmFWp" data-reactid="81">
+								<div class="_2pcE6sKlxu423STGpC7YoF _1XK4vqxxkvKi9S5zF73ae6 _2tmCKpyhs7lg0t3GNxaEyI _2YMI3cg9p9tab6hmvmNQ10" data-reactid="323">
+								<span class="_1XK4vqxxkvKi9S5zF73ae6">
+									<select name="is_open" id="is_open">
+ 									 <option value ="0">仅自己可见</option>
+  									 <option value ="1">公开发表</option>
+  									 <option value="2">用密码访问</option>
+									</select>
+									</span>
+								   <span class="_1XK4vqxxkvKi9S5zF73ae6" style="margin-left:10px;line-height:25px;">
+									   <input type="text" name="show-passwd" id="show-passwd" value="">
+									</span>
+								<div class="_2PNRJNNjA4_U0YygXkoknR _1OA4XhWH4GOtxvwbojfWfG _3v_zAVygGsgTOXKmtDSJoS" data-reactid="325"></div>
+								</div>
+                            </div>
+							{{/*最下面end*/}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- react-empty: 85 -->
+    </div>
+</div>   
+
+{{/*保存*/}}
+  <div id="menu">
+    <span>保存为:</span>
+    <div id="saveas-markdown">
+      <svg height="64" width="64" xmlns="http://www.w3.org/2000/svg">
+        <g transform="scale(0.0625)">
+          <path d="M950.154 192H73.846C33.127 192 0 225.12699999999995 0 265.846v492.308C0 798.875 33.127 832 73.846 832h876.308c40.721 0 73.846-33.125 73.846-73.846V265.846C1024 225.12699999999995 990.875 192 950.154 192zM576 703.875L448 704V512l-96 123.077L256 512v192H128V320h128l96 128 96-128 128-0.125V703.875zM767.091 735.875L608 512h96V320h128v192h96L767.091 735.875z" />
+        </g>
+      </svg>
+
+      <span>Markdown</span>
+    </div>
+    <div id="saveas-html">
+      <svg height="64" width="64" xmlns="http://www.w3.org/2000/svg">
+        <g transform="scale(0.0625) translate(64,0)">
+          <path d="M608 192l-96 96 224 224L512 736l96 96 288-320L608 192zM288 192L0 512l288 320 96-96L160 512l224-224L288 192z" />
+        </g>
+      </svg>
+
+      <span>HTML</span>
+    </div>
+    <a id="close-menu">&times;</a>
+  </div>
+ </div>
+   <script src="/static/js/jquery.min.js"></script>
+   <script src="/static/tools/layer/layer.js"></script>
+   <script src="/static/markdown-editor/toolbar.js"></script>
+   <script>
+	//window.onbeforeunload = componentDidMount; 
+   componentDidMount();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+{{template "header"}}
+<script type="text/javascript" language="javascript" src="/static/tools/layer/layer.js"></script>
+</head>
+ <body style="background-color:#F3F3F3">
+<div class="bar-header">
+      <div class="logo-bar"></div>
+ </div>
+
+<div class="heading">
+	<div class="branding"></div>
+	<h5>分享是一种生活的信念，明白了分享的同时，明白了存在的意义</h5>
+</div>
+<div class="minimal-body">
+
+<div class="minimal-body-form" style="margin:30px auto;">
+<label for="share-password">请输入分享密码:</label>
+<form class="pure-form" id="shareForm">
+	<input  type="hidden" name="id" value="{{ .id}}">
+  <fieldset>
+        <input id="share-password" name="share-password" type="text" placeholder="">
+        <button type="button"  onclick="users._share();" class="pure-button pure-button-primary">查看密文</button>
+    </fieldset>
+</form>
+</div>
+</div>
+
+</body>
+</html>

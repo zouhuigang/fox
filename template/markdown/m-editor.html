@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+{{template "header"}}
+<title>新建笔记_安橙网云笔记</title>
+<meta name="keywords" content="安橙网,anooc,安橙官网" />
+<meta name="tags" content="安橙网,anooc,安橙官网" />
+<meta name="description" content="{{.info.Title}}" />
+
+<style type="text/css">
+body{
+	background-color:#ecf0f3;
+}
+input,button,select,textarea{ outline:none;}
+textarea{resize:none;}
+
+select {
+  /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+  border: solid 1px #ecf0f3;
+
+  /*很关键：将默认的select选择框样式清除*/
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  -ms-appearance:none;
+
+  /*在选择框的最右侧中间显示小箭头图片*/
+  background: url("/static/images/arrow_gray.png") no-repeat scroll right center transparent;
+
+
+  /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+  padding-right: 18px;
+}
+
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }
+
+
+#code{
+margin:20px auto;
+}
+#code textarea{
+width:100%;
+height:200px;
+background-color:#ecf0f3;
+border:none;
+letter-spacing:2px;
+line-height:24px;
+}
+
+
+
+.m-editor-save{
+	height:70px;
+	background-color:#fff;
+}
+.anooc-button-c{
+	width:90%;
+	margin:20px auto;
+}
+.anooc-save{
+	width:100%;
+	background-color:#01be00;
+}
+
+{{/*权限控制*/}}
+.m-editor-root{
+	width:100%;
+	background-color:#fff;
+	border-bottom:1px solid #e1e1e1;
+	color:#cacaca;
+}
+.m-editor-root label{
+	letter-spacing:2px;
+}
+.m-editor-root select{
+	color:#cacaca;
+	letter-spacing:2px;
+	margin-left:5px;
+	height:25px;
+	padding-left:10px;
+}
+
+.m-editor-title{
+	margin-top:10px;
+	padding:10px 0 0 0;
+	background-color:#fff;
+}
+#title{
+width:100%;
+height:30px;
+line-height:30px;
+border-left-width:0px;border-top-width:0px;border-right-width:0px;
+border-bottom-width:1px;
+border-bottom-color:#e1e1e1
+border-radius:5px;
+letter-spacing:2px;
+
+}
+</style>
+<script type="text/javascript">
+
+//移动端
+//保存m端
+function msaveMd(){
+	
+	    var md =$("#mtextarea").val();
+		var title = $("#title").val();
+		var id = parseInt($("#id").val())?parseInt($("#id").val()):0;
+		var is_open = parseInt($("#is_open").val())?parseInt($("#is_open").val()):0;
+		if(!title){
+		    layer.msg("标题不能为空啦...", {icon: 5});
+			return false;
+		}
+		if(!md){
+		    layer.msg("讨厌,内容不能为空啦...", {icon: 5});
+			return false;
+		}
+		//{id:id,content:md,title:title.text,submit:1,is_open:is_open,password_code:}
+		var tempObj={};
+		tempObj["submit"] =1;
+        tempObj["id"] =id;
+        tempObj["content"] = md;
+        tempObj["title"] = title;
+		tempObj["is_open"] = is_open;
+
+		if(is_open==2){//加密密码
+			var share_password=createcode();
+			if(!share_password){
+			   layer.msg("设置为用密码访问时,密码不能为空", {icon: 5});
+			}
+
+			tempObj["password_code"] = share_password;
+		}
+		
+		$.ajax({
+			     type: "POST",
+	             url: "/md/submitmd",
+	             data:tempObj,
+	             dataType: "json",
+	             success: function(data){
+				  //提示层
+				  layer.msg(data.msg);
+				  $("#id").val(data.data.id);
+				  setTimeout("window.location.reload()",1000);
+				 }
+		})	
+}
+
+function createcode(){
+		    code = "";  
+            var codeLength = 4;//验证码的长度  
+            var selectChar = new Array(0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');//所有候选组成验证码的字符，当然也可以用中文的  
+          
+           for(var i=0;i<codeLength;i++){      
+             var charIndex = Math.floor(Math.random()*36);  
+             code +=selectChar[charIndex];  
+            } 
+
+		    return code;
+
+}
+</script>
+<head>
+<body>
+	{{template "menu"}}
+
+
+<div class="pure-g m-editor-title"><div class="anooc-button-c"><input id="title" type="text" placeholder="请输入要发布的标题"/></div></div>
+
+<div class="pure-g">
+
+<div class="pure-u-22-24" id="code">	
+	<textarea id="mtextarea" placeholder="请输入要发布的文字内容"></textarea> 
+</div>
+
+</div>
+
+<div class="pure-g m-editor-root">
+	<div class="pure-control-group anooc-button-c">
+		<label for="is_open">访问权限:</label>
+        <select name="is_open" id="is_open">
+ 		 <option value ="0">仅自己可见</option>
+ 		 <option value ="1">公开发表</option>
+ 		 <option value="2">用密码访问</option>
+	  </select>
+	 </div>
+</div>
+
+{{/*提交按钮*/}}
+<div class="pure-g m-editor-save">
+	<div class="anooc-button-c"><button class="button-success pure-button anooc-save" onclick="msaveMd();return false;">保存</button></div>
+</div>
+
+ <script src="/static/js/jquery.min.js"></script>
+ <script src="/static/tools/layer/layer.js"></script>
+</body>
+</html>
