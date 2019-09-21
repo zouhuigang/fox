@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"fox/system"
 	// "fmt"
 	// "html/template"
@@ -28,7 +29,7 @@ type TitleMeta struct {
 
 //注册路由
 func (this *MdController) RegisterRoute(g *echo.Group) {
-	g.GET("/editor", this.Editor)
+	g.GET("/", this.Editor)
 	g.GET("/make/file", this.mk)
 	// g.GET("/vm/:id", this.View)
 }
@@ -58,7 +59,15 @@ func (MdController) Editor(ctx echo.Context) error {
 	data["meta"] = meta
 	data["flinks"] = "ass"
 
-	return render(ctx, "markdown/editor.html,common/template.html", data)
+	var pages string = "markdown/editor.html"
+	pages = fmt.Sprintf("%s,%s", pages, "common/template.html")
+	pages = fmt.Sprintf("%s,%s", pages, "compoents/header.html")
+	pages = fmt.Sprintf("%s,%s", pages, "compoents/leftNav.html")
+	pages = fmt.Sprintf("%s,%s", pages, "compoents/body.html")
+	pages = fmt.Sprintf("%s,%s", pages, "compoents/left2.html")
+	pages = fmt.Sprintf("%s,%s", pages, "compoents/preview.html")
+	pages = fmt.Sprintf("%s,%s", pages, "compoents/save.html")
+	return render(ctx, pages, data)
 
 }
 
@@ -110,7 +119,7 @@ func (this *MdController) mk(ctx echo.Context) error {
 		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件名不能为空")
 	}
 
-	f, err := os.Create(parse.EnvConfig.Root + fileName+".md")
+	f, err := os.Create(parse.EnvConfig.Root + fileName + ".md")
 	defer f.Close()
 	if err != nil {
 		return system.ResponeJson(ctx, system.ErrUnknown, data)

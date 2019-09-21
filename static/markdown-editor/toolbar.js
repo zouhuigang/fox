@@ -272,6 +272,12 @@ document.getElementById('fa-save').addEventListener('click', function() {
 	 
 });
 
+//左侧菜单关闭
+document.getElementById('navToggler').addEventListener('click', function() {	
+	showHideNav();
+	 
+});
+
 
 
 
@@ -291,6 +297,20 @@ function ShowHideView(){
 	}
 
 	
+}
+
+function showHideNav(){
+  var att=$(".leftMenu").css("display");
+	if(att=='flex'||att=='block'){
+    $(".leftMenu").css("display","none");	
+    $(".bodyEditor").css("left","0px");
+    $("#navToggler").addClass("navTogglerOn");
+	}else if(att=="none"){
+    $(".leftMenu").css("display","block");
+    $(".bodyEditor").css("left","270px");
+    $("#navToggler").removeClass("navTogglerOn");
+    
+	}
 }
 
 

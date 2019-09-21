@@ -15,7 +15,22 @@
 	fox wiki
 
 
+### 正在开发的开源库
 
+
+[Fox wiki](https://github.com/zouhuigang/fox)
+>针对github的本地wiki系统
+
+
+[FenghuanNat](https://github.com/zouhuigang/fenghuangNat)
+>内网穿透
+
+
+[Tiangou](https://github.com/zouhuigang/tiangou)
+>爬虫系统
+
+[weixinSdk](https://github.com/zouhuigang/weixinsdk)
+>微信公众平台开发支出库
 
 
 
