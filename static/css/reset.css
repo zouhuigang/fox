@@ -1,0 +1,79 @@
+
+
+html,body,span,div,p,a,table,tbody,td,h1,h2,h3,img,form,font,strong,b,i,dl,dt,dd,ol,ul,li,dl,dd,dt,iframe,label,blockquote,input,em,dfn,button {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-style: normal
+}
+
+html.noScroll {
+	height: 100%;
+	overflow: hidden
+}
+
+html.noScroll body {
+	height: 100%;
+	overflow: hidden
+}
+
+img {
+	vertical-align: middle;
+	border: 0
+}
+
+header,nav,footer,section,article,aside {
+	display: block
+}
+
+button,input,select,textarea {
+	font-size: 100%;
+	font-family: inherit
+}
+
+a:link {
+	color: #333;
+	text-decoration: none
+}
+
+a:visited {
+	color: #868686
+}
+
+a:focus {  outline:none;   -moz-outline:none;}
+
+.fl-r {
+	float: right
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: "";
+	clear: both;
+	height: 0
+}
+
+.clearfix {
+	zoom: 1
+}
+
+.fn-hide {
+	display: none
+}
+
+.font-size--20 {
+  font-size: 20px;
+}
+.float--left {
+  float: left !important;
+}
+.float--right {
+  float: right !important;
+}
+
+.line-height--25{
+    line-height:25px
+}
+

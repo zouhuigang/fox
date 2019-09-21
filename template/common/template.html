@@ -1,0 +1,208 @@
+{{define "header"}}{{$all :=.}}{{$first :=index .meta 0}}
+<title>{{mysqlhtml $first.Title $all}}</title><meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Cache-Control" content="no-transform" /> 
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalabel=0">{{range $k, $v := .meta}}
+<meta {{.MetaType}}="{{.Name}}" content="{{mysqlhtml .Content $all}}"/>{{end}}
+
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link rel="stylesheet" href="/static/pure/pure-min.css">
+<link href="/static/css/reset.css" rel="stylesheet" type="text/css">
+<link href="/static/css/custom.css" rel="stylesheet" type="text/css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="/static/pure/side-menu.css">
+    <!--<![endif]-->
+<script type="text/javascript" language="javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/custom.js"></script>
+<link rel="stylesheet" href="/static/tools/font-awesome-4.7.0/css/font-awesome.min.css">
+{{end}}
+
+{{define "nav"}}
+<!-- 菜单 -->
+ <div class="pure-menu pure-menu-open">
+            <a class="pure-menu-heading" href="/"><i class="fa fa-home"></i><span class="font-index-menu">安橙首页</span></a>
+            <ul>
+				<li><a href="/bottle"><i class="fa fa-heart"></i><span class="font-index-menu">漂流瓶</span></a></li>
+				{{/*
+				<li><a href="/blog"><i class="fa fa-book"></i><span class="font-index-menu">云笔记</span></a></li>
+				*/}}
+				<li><a href="/shop/tshow/"><i class="fa fa-shopping-bag"></i><span class="font-index-menu">装扮商城</span></a></li>
+				{{ if .me.Uid }}
+				<li><a href="/editor?kw={{.kw}}"><i class="fa fa-edit"></i><span class="font-index-menu">新建笔记</span></a></li>
+				<li><a href="/u/{{.me.Username}}"><i class="fa fa-user"></i><span class="font-index-menu">{{.me.Username}}</span></a></li>			
+				<li><a href="/u/{{.me.Username}}"><i class="fa fa-sign-out"></i><span class="font-index-menu">退出</span></a></li>
+				{{else}}
+				<li><a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i><span class="font-index-menu">登录注册</span></a></li>
+				{{end}}
+				
+            </ul>
+ </div>
+{{end}}
+
+{{define "menu-nav"}}
+<style type="text/css">
+.w_head_outer {
+	background:#27272b;box-shadow: 0 7px 47px -10px rgba(0,0,0,.75);
+    height: 68px;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 299;
+	border-top: 1px solid #ff8500;
+}
+</style>
+
+
+{{$navtype := isNullSetDefault $.navtype "index"}}
+
+<div class="w_head_outer">
+	<div class="headWrap">
+	<div class="headInside" id="header">
+	<h1>
+		<a href="/">安橙网</a>
+	</h1>
+	<ul class="topNav" id="topNav" role="navigation">
+        <li class="topNavItem"><a href="/"  {{if eq $navtype "index"}} class="active" {{end}}><u>首页</u><i></i></a></li>
+		<!--<li class="topNavItem"><a href="/bottle" target="_blank"><u>漂流瓶</u><i></i></a></li>-->
+		<!--<li class="topNavItem"><a href="/shop/tshow/" target="_blank"><u>装扮商城</u><i></i></a></li>-->
+		<!-- <li class="topNavItem"><a href="/ts/list" {{if eq $navtype "list"}} class="active" {{end}}><u>在线工具</u><i></i></a></li> -->
+		<!--<li class="topNavItem"><a href="/ishare" target="_blank"><u>资源共享</u><i></i></a></li>-->
+		<li class="topNavItem"><a href="/ts/img"  {{if eq $navtype "tsimg"}} class="active" {{end}}><u>图片专区</u><i></i></a></li>
+		<li class="topNavItem"><a href="/shop/vip" {{if eq $navtype "svip"}} class="active" {{end}}><u>加入VIP</u><i></i></a></li>
+		{{ if .me.Uid }}
+			<li class="topNavItem"><a href="/editor?kw={{.kw}}"><u>新建笔记</u><i></i></a></li>
+			<li class="topNavItem"><a href="/u/{{.me.Username}}"><u>{{.me.Username}}</u><i></i></a></li>			
+			<li class="topNavItem"><a href="/logout"><u>退出</u><i></i></a></li>
+		{{else}}
+		<li class="topNavItem"><a href="/login"><u>登录注册</u><i></i></a></li>
+		{{end}}
+		<li class="topNavItem"><a href="/wall"  {{if eq $navtype "wall"}} class="active" {{end}}><u>留言墙</u><i></i></a></li>
+    </ul>
+
+  <div class="tSearchNew" role="search">
+			<form id="searchForm" method="get" action="/s?q=ss&from=sf&type=article">
+				<label for="searchKey">搜文章/笔记/小村落</label><input id="searchKey" maxlength="50" name="k" autocomplete="off" class="inputTxtNew" accesskey="s" type="text">
+				<input name="pos" value="174" type="hidden">
+				<input name="s_source" value="" type="hidden">
+				<input class="inputBtn" value="搜索" type="submit">
+				<a href="#" class="btn_ldrop"><em></em></a>
+			</form>
+		</div>
+		<div id="nav_pub_wrap" class="nav_pub_wrap">
+			<a href="#" class="btn_nav_pub" title="写微博">
+				<b class="ic ico_pubBlog"></b>
+			</a>
+		</div>
+		<div id="nav_fix_wrap" class="nav_fix_wrap"></div>
+	</div>
+	
+	<!--<div class="headShadow"></div>
+	<div class="head-nav-bottom"></div>-->
+</div>
+
+</div>
+{{end}}
+
+
+{{define "menu"}}
+<div class="pure-menu pure-menu-open pure-menu-horizontal">
+    <ul>
+        <li><a href="/">首页</a></li>
+        <li class="pure-menu-selected"><a href="/blog">云笔记</a></li>
+        <li><a href="/login">登录</a></li>
+    </ul>
+</div>
+{{end}}
+
+{{define "menuTop"}}
+{{/*top menu*/}}
+<div class="head-wrap"><header class="news-topbar webapp">
+    <div class="abs_m">
+        <div class="refresh_title"></div>
+    </div>
+    <div class="topbar-menu">
+
+         
+		    <!-- Menu toggle -->
+            <a class="show_level2" id="menuLink"  style="display: block;"></a>
+            <a class="download " style="display:none;"></a>
+        
+    </div>
+    <div class="topbar-tool-sm">
+        <a href="/" class="report" style="display:none;">反馈</a>
+        <a href="/" class="search" style="display:none;">搜索</a>
+    </div>
+
+
+    <div class="downloadBg" style="height: 717px;">
+        <div class="downloadBg-content" style="width: 345px; margin-left: -172.5px;">
+            <div class="banner"></div>
+            <div class="close"></div>
+            <div class="title">您的头条速递已经到达</div>
+            <div class="subtitle"></div>
+            <a class="download-btn" href="javascript:void(0)">【拆开看看】</a>
+        </div>
+    </div>
+</header></div>
+
+<div  id="nav-shadow" class="displayNone"><i class="wid-catalog-close"></i></div>
+{{/*/top menu*/}}
+
+{{end}}
+
+{{define "footer-old"}}
+<div class="footer">
+	<p>
+	<a target="_blank" href="/vm/7ebab12a10371f1840f99b0c2671991c">关于安橙</a> | 
+	<a target="_blank" href="/vm/ace2c2fb43bb3973c05cc57e4c4f7b12">服务条款</a> | 
+	<a target="_blank" href="/vm/739143c98b87487c85cc04866e007e7f">隐私政策</a>
+	</p>
+	<p>Copyright &copy; 2014 - 2017 安橙网 / 赣ICP备16009868号 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256645125'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1256645125' type='text/javascript'%3E%3C/script%3E"));</script></p>
+</div>
+{{end}}
+
+{{define "footer"}}
+<div class="w-foot">
+            <div class="w-foot-main">
+                <div class="w-foot-friendlink">
+                        <p>
+                            <strong>友情链接:</strong>
+                        </p>
+                        <ul class="list">
+								{{range $k, $v := .flinks}}
+								<li><a href="{{$v.Url}}" target="_blank">{{$v.Title}}</a></li>
+								{{end}}
+                                <li style="position: relative;"><a href="/flinks" target="_blank">更多<i style="font-style: normal;position: absolute;top: -8px;left: 26px;font-size: 20px;">»</i></a></li><a href="http://www.yy.com/flinks" target="_blank">
+                        </a></ul>
+				</div>
+				
+				<div class="w-foot-link">
+					<p>
+						<a href="javascript:;" rel="nofollow"><img src="/static/images/copyright/j.gif"> 赣ICP备16009868号-1</a><span>|</span>
+						<a href="/vm/7ebab12a10371f1840f99b0c2671991c" rel="nofollow">关于安橙</a><span>|</span>
+						<a href="/vm/ace2c2fb43bb3973c05cc57e4c4f7b12">服务条款</a><span>|</span>
+						<a href="/vm/739143c98b87487c85cc04866e007e7f" rel="nofollow">隐私政策</a><span>|</span>
+                        <a href="/sitemap/sitemapindex.xml" rel="nofollow">网站地图</a><span>|</span>
+						<!--客服频道：<strong><a href="javascript:;" rel="nofollow">10</a></strong><span>|</span>
+						<a href="javascript:;" rel="nofollow">客服中心</a><span>|</span>-->
+						<a href="/visitor" rel="nofollow">用户城市分布图</a>
+                        </p>
+
+
+				   <p>
+				   <a href="http://www.gov.cn/" rel="nofollow">中国政府网</a><span>|</span>   
+					<a href="http://jb.ccm.gov.cn/" rel="nofollow">12318 全国文化市场举报网站</a><span>|</span>                
+					<a href="http://www.12377.cn/" rel="nofollow">中国互联网举报中心</a><span>|</span>
+					<a href="http://www.cyberpolice.cn/" rel="nofollow">网络违法犯罪举报网站</a>
+					</p>
+					<!--构建版本:{{.app.Build}},开始运行时间:{{.app.Date}}-->
+					<p>版权所有 © 2014-2017 anooc.com , All rights reserved.软件版本：{{.app.Version}}
+					{{.config.Statistic| noescape}} 服务器时间:{{nowtime}}</p>
+                </div>
+            </div>
+</div>
+{{end}}

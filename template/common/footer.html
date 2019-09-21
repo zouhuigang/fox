@@ -1,0 +1,50 @@
+{{define "footer"}}
+<div class="w-foot">
+            <div class="w-foot-main">
+                <div class="w-foot-friendlink">
+                        <p>
+                            <strong>友情链接:</strong>
+                        </p>
+                        <ul class="list">
+								{{range $k, $v := .flinks}}
+								<li><a href="{{$v.Url}}" target="_blank">{{$v.Title}}</a></li>
+								{{end}}
+                                <li style="position: relative;"><a href="/flinks" target="_blank">更多<i style="font-style: normal;position: absolute;top: -8px;left: 26px;font-size: 20px;">»</i></a></li><a href="http://www.yy.com/flinks" target="_blank">
+                        </a></ul><a href="  /flinks" target="_blank">
+                    </a>
+				</div>
+				<a href="http://www.yy.com/flinks" target="_blank">
+                </a>
+				
+				<div class="w-foot-link">
+					<a href="http://www.yy.com/flinks" target="_blank"></a>
+					<p><a href="http://www.yy.com/flinks" target="_blank"></a>
+						<a href="/vm/7ebab12a10371f1840f99b0c2671991c" rel="nofollow">关于安橙</a><span>|</span>
+						<a href="/vm/ace2c2fb43bb3973c05cc57e4c4f7b12">服务条款</a><span>|</span>
+						<a href="/vm/739143c98b87487c85cc04866e007e7f" rel="nofollow">隐私政策</a><span>|</span>
+						<a href="javascript:;" rel="nofollow">联系我们</a><span>|</span>
+						<a href="javascript:;" rel="nofollow">诚聘英才</a><span>|</span>
+						<a href="javascript:;" rel="nofollow">版权保护投诉指引</a><span>|</span>
+                        <a href="/sitemap/sitemapindex.xml" rel="nofollow">网站地图</a><span>|</span>
+						客服频道：<strong><a href="javascript:;" rel="nofollow">10</a></strong><span>|</span>
+						<a href="javascript:;" rel="nofollow">客服中心</a><span>|</span>
+						<a href="/visitor" rel="nofollow">用户城市分布图</a><span>|</span>
+                        <a href="http://www.100.com/" rel="nofollow">100教育</a><span>|</span>
+						<a href="http://www.edu24ol.com/" rel="nofollow">环球网校</a></p>
+
+                    <p><a href="javascript:;" rel="nofollow">粤ICP备09075143号</a><span>|</span>
+					<a href="javascript:;" rel="nofollow">粤B2-20050785</a><span>|</span>
+					<a href="javascript:;" rel="nofollow">增值电信业务经营许可证B2-20120219</a><span>|</span>
+					<a href="javascript:;" rel="nofollow">粤网文[2015]1712-302号</a><span>|</span>
+					<a href="javascript:;" rel="nofollow"><img src="http://yyweb.yystatic.com/pc/images/company/j.gif"> 赣ICP备16009868号</a><span>|</span>
+					<a href="http://jb.ccm.gov.cn/" rel="nofollow">12318 全国文化市场举报网站</a>
+                    </p>
+                    <p>
+					<a href="http://www.12377.cn/" rel="nofollow">中国互联网举报中心</a><span>|</span>
+					<a href="http://www.cyberpolice.cn/" rel="nofollow">网络违法犯罪举报网站</a>
+					</p>
+					<p>上海安橙网络科技有限公司 版权所有 © 2014-2017 anooc.com , All rights reserved.{{.config.Statistic| noescape}}</p>
+                </div>
+            </div>
+</div>
+{{end}}

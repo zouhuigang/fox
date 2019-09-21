@@ -1,0 +1,49 @@
+@charset "utf-8";
+/* CSS Document */
+body{font: 14px/1.5 "Microsoft Yahei","arial"; min-width: 320px; margin:0px; padding:0px; background:#e6e6e6 }
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { margin: 0; padding:0;font: 14px/1.5 "Microsoft Yahei","arial";}img{border:0 none; vertical-align:top; width:100%}ul, li{list-style-type:none;}
+img.face{width:auto}
+a, a:visited{color:#030303; text-decoration:none}
+a:hover{color:#f39a2c}
+*,
+ *:before,
+ *:after {
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+ }
+/*clearfix*/
+.clearfix:before,.clearfix:after{content:".";display:block;height:0;overflow:hidden;}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1;/* IE < 8 */}
+.row:before,.row:after{content:".";display:block;height:0;overflow:hidden;}
+.row:after{clear:both;}
+.row{zoom:1;/* IE < 8 */}
+
+/*banner*/
+.headerBanner{ line-height:0px;}
+.headerBanner .swiper-pagination-bullet.swiper-pagination-bullet-active{background:#fff;opacity:0.6; border:solid 1px #fff;}
+.headerBanner .swiper-pagination-bullet{background:rgba(255,255,255,0);  opacity:0.6; border:solid 1px #fff;}
+
+/*九宫图*/
+.reppopBg{background:#e6e6e6}
+.reppop9{margin:0px auto;}
+.reppop9 dl{width:33.33333333333%; float:left; text-align:center}
+.reppop9 dl a{display:block; background:#fff; margin:0px 0px 1px 1px; font-size:16px; position:relative; color:#414141}
+.reppop9 dl.default a{ cursor:default; background:#fff;}
+.reppop9 dl.default a:hover{ background:#fff;}
+.reppop9 dl a:hover{background:#f8f8f8; color:#666}
+.reppop9 dl i.tipMsg{width:20px; height:20px; text-align:center; background:#e51c23; border-radius:50%; font-size:12px; color:#fff; position:absolute; top:10px; right:10px; font-style:normal}
+/*
+.reppop9 dl:nth-last-of-type(1) a:hover{background:#fff; cursor:default}
+.reppop9 dl:nth-last-of-type(2) a:hover{background:#fff; cursor:default}
+.reppop9 dl:nth-last-of-type(3) a:hover{background:#fff; cursor:default}*/
+
+.reppop9 dl dt{display:block; width:30px; height:31px; margin:0px auto 6px auto;}
+.icopy{color:#999; text-align:center; height:50px; line-height:50px; text-shadow:1px 1px 1px rgba(255,255,255,0.5); }
+.fixted{ position:fixed; width:100%; z-index:100; bottom:0px; background:#e6e6e6}
+
+
+@media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){
+.fixted{ position:static; width:100%; z-index:100; bottom:0px; background:#e6e6e6}	
+}

@@ -1,0 +1,135 @@
+{{define "search-header"}}
+<link href="/static/search/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="/static/search/css/style.css?v=1.0" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+<meta name="HandheldFriendly" content="true">
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" style="font-size:13px">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="web-s"><a href="/">首页</a></li>
+          <li class="pan-s active"><a href="/search?type=article">文章</a></li>
+          <li class="bt-s"><a href="/search?type=village">小村落</a></li>
+          <li class="pdf-s"><a title="BT种子搜索" href="/search?type=pdf">电子书</a></li>
+          <li><a id="fulls" href="#">开启全屏</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a title="/" href="/">网址导航</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{{end}}
+
+{{define "search-form"}}
+<form id="s-form" action="/s" method="get">
+    <div class="input-group">
+      <input baiduSug="2" autofocus placeholder="搜索网页或要下载的资源" name="q" id="q" type="text" style="box-shadow:none;" class="form-control" />
+      <input type="hidden" name="from" value="sf" />
+      <input id="type" type="hidden" name="type" value="article" />
+      <span class="input-group-btn">
+        <button type="submit" id="search-btn" class="btn" style="background:#3385ff;border-bottom:1px solid #2d78f4;padding-right:10px;padding-left:16px;color:#fff;"><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;</button>
+      </span>
+    </div>
+</form>
+
+{{end}}
+
+{{define "search-js"}}
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="/static/search/js/bootstrap.min.js"></script>
+<script charset="gbk" src="http://www.baidu.com/js/opensug.js"></script>
+<script src="/static/search/js/base64.min.js"></script>
+<script type="text/javascript">
+function full_screen(){
+    var docElm = document.documentElement;
+	//W3C 
+	if (docElm.requestFullscreen) 
+		docElm.requestFullscreen();
+	//FireFox 
+	else if(docElm.mozRequestFullScreen)
+		docElm.mozRequestFullScreen();
+	//Chrome等 
+	else if(docElm.webkitRequestFullScreen)
+		docElm.webkitRequestFullScreen();
+	//IE11
+	else if(elem.msRequestFullscreen)
+		elem.msRequestFullscreen();
+}
+function exit_full_screen(){
+    if (document.exitFullscreen)
+		document.exitFullscreen();
+	else if(document.mozCancelFullScreen)
+		document.mozCancelFullScreen();
+	else if(document.webkitCancelFullScreen)
+		document.webkitCancelFullScreen(); 
+	else if (document.msExitFullscreen)
+		document.msExitFullscreen();
+}
+
+$(function(){
+	$("#s-form").submit(function(e){
+	    e.preventDefault();
+	    var kw = $('#q').val();
+	    if(!kw){
+	        $('#q').focus();
+	        return false;
+	    }
+	    var type = $("#type").val();
+	    var url = 's'+'?k='+encodeURIComponent(Base64.encode(kw))+'&from=sf&type='+type;
+	    window.location = url;
+	    return false;
+	});
+	$(function(){
+		$("#fulls").click(function(){
+			if($(this).hasClass("on")){
+				$(this).removeClass("on").addClass("off").text("开启全屏");
+				exit_full_screen();
+			}else{
+				$(this).removeClass("off").addClass("on").text("关闭全屏");
+				full_screen();
+			}		
+		});
+	})
+})
+</script>
+
+{{end}}
+
+{{define "search-form-result"}}
+
+<form id="s-form" action="" method="get">
+    <input type="hidden" id="type" name="type" value="note" /> 
+    <input type="hidden" name="from" value="sf" />
+    <div class="input-group">
+		<input baiduSug="2" name="q" id="q" type="text" style="box-shadow:none;" value="{{.key}}" class="form-control" />
+      <span class="input-group-btn">
+        <button type="submit" class="btn" style="background:#3385ff;border-bottom:1px solid #2d78f4;padding-right:5px;padding-left:5px;color:#fff;">&nbsp;&nbsp;<i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;</button>
+      </span>
+    </div>
+</form>
+{{end}}
+
+{{define "search-bar"}}
+<div id="s-bar">
+  <div class="container">
+    <ul id="search-bar" class="nav nav-pills">
+      <li><a href="/s?from=tab&q=" class="web-s" >文章</a></li>
+      <li><a href="#" class="pan-s active">小村落</a></li>
+      <li><a href="/s?from=tab&q=&type=pdf" class="pdf-s">电子书</a></li>
+    </ul>
+  </div>
+</div>
+{{end}}

@@ -29,9 +29,10 @@ ____________________________________O/_______
 type MyEnv struct {
 	Root string
 	Env  struct {
-		Weburl  string `yaml:"weburl"`
-		Wxtoken string `yaml:"wxtoken"`
-		Version string `yaml:"version"`
+		Weburl      string `yaml:"weburl"`
+		TemplateDir string `yaml:"template_dir"`
+		Version     string `yaml:"version"`
+		Github string `yaml:"github"`
 	}
 }
 
@@ -71,18 +72,17 @@ func EnvParse() {
 	}
 	EnvConfig.Root = filepath.Dir(binaryPath) + "/"
 	//sql模板路径
-	sqlTpl := EnvConfig.Root + "sql/readme.md"
-	if !fileExist(sqlTpl) {
+	envConFile := EnvConfig.Root + "conf/env.yml"
+	if !fileExist(envConFile) {
 		curDir, _ := os.Getwd()
-		//fmt.Println("================", curDir)
 		pos := strings.LastIndex(curDir, "src")
 		if pos == -1 {
-			golog.Fatalf("can't find  error. %s", sqlTpl)
+			golog.Fatalf("can't find  error. %s", envConFile)
 		}
 
 		EnvConfig.Root = curDir[:pos]
 	}
-	fmt.Printf("%s%s" ,banner, EnvConfig.Env.Weburl)
+	fmt.Printf("%s%s\n", banner, EnvConfig.Env.Github)
 	golog.Info("Root path:" + EnvConfig.Root)
 	golog.Info("version:" + EnvConfig.Env.Version)
 

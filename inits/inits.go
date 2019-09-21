@@ -4,6 +4,6 @@ import (
 	"fox/inits/parse"
 )
 
-func init() {
+func Init() {
 	parse.EnvParse()
 }

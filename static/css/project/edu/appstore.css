@@ -1,0 +1,33 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{font: 14px/1.5 "Microsoft Yahei","arial"; min-width: 320px; margin:0px; padding:0px; }
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { -webkit-tap-highlight-color:rgba(0,0,0,0); margin: 0; padding:0;font: 14px/1.5 "Microsoft Yahei","arial";}
+ul, li{list-style-type:none;}
+img.face{width:auto}
+a, a:visited{color:#030303; text-decoration:none}
+a:hover{color:#f39a2c}
+*,
+ *:before,
+ *:after {
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+ }
+/*clearfix*/
+.clearfix:before,.clearfix:after{content:".";display:block;height:0;overflow:hidden;}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1;/* IE < 8 */}
+.row:before,.row:after{content:".";display:block;height:0;overflow:hidden;}
+.row:after{clear:both;}
+.row{zoom:1;/* IE < 8 */}
+
+body{background:#f7f7f7; padding-bottom:65px;}
+.pdt{padding-top:55px;}
+
+/*返回顶部*/
+.backToTop{background:url(../images/backtop.png) no-repeat center; width:40px; height:40px; background-size:auto 40px; position:fixed; z-index:1000; bottom:55px; right:10px;}
+
+
+/*返回按钮*/
+.back{ position:fixed; width:55px; height:55px; background:rgba(255,255,255,0.5); border:solid 1px #b0b0b1; left:10px; bottom:10px;}
+.back img{width:100%;}

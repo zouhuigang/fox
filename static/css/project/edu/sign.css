@@ -1,0 +1,187 @@
+body{margin: auto; background: #efeff4;color: #333; font-size: 16px;font-family: 'helvetica neue',tahoma,'hiragino sans gb',stheiti,'wenquanyi micro hei',"Microsoft Yahei",sans-serif,Arial,Roboto;}
+header{
+    height: 1.55rem;
+    line-height: 1.55rem;
+    margin: 0;
+    text-align: center;
+    font-size: .36rem;
+    color: #333333;
+}
+.c-333{color: #333!important;}
+header img{
+    width: 100%;
+}
+.br0{
+    border-right: 0px!important;
+}
+i,em{font-style: normal;}
+.jf-container{
+    border-bottom: 1px solid #e2e2e2;
+    margin: .0rem .3rem 0 .3rem;
+    padding-bottom: .2rem;
+}
+.mt30{margin-top: .30rem!important;}
+.f-left{float: left;}
+.f-right{float: right;}
+.clearfix:after{content: '';display: block;clear: both;}
+.pay-label{font-size: .24rem;color: #999999;}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+.pay-price{font-size: .30rem;color: #b3b3b3;line-height: .75rem;border: none;width: 4rem;text-align: right;}
+.pay-info{line-height: .85rem;height: .85rem;border-bottom: 1px solid #e6e6e6;margin-bottom: .3rem;}
+
+.jf-wrap{position: relative; font-size: .3rem;line-height: .7rem;color: #666666;}
+.jf-price1,.jf-price2{color: #e8586e;}
+.right-center{position: absolute;top: 0;bottom: 0;right: 0rem;margin: auto;}
+
+.un-check{background: url(/static/images/project/edu/un_check.png) no-repeat;display: inline-block;height: .5rem;width: .5rem;background-size: 100%;}
+.check{background: url(/static/images/project/edu/check_status.png) no-repeat;background-size: 100%;}
+
+
+.total-wrap{font-size: .34rem;color: #333;margin: 0.4rem .3rem;text-align: right;}
+.total-wrap div{padding-top: .4rem; font-size: .6rem;color: #05bd03;}
+.total-wrap.input-status{
+    margin-bottom: 5.5rem;
+}
+.pay-btn{border-radius: 5px; display: block;margin: .3rem;background: #05bd03;font-size: .32rem;color: #fff;text-align: center;line-height: .8rem;}
+
+.highlight{color: #ff6804;padding: 0 .05rem;}
+.highlight-o{color: #e7af19;padding: 0 .05rem;}
+.input-price-wrap{position: relative; background: #fff; width:100%;font-size: .34rem;height: 1.2rem;border: 1px solid #e2e2e2;margin: auto;border-radius: 5px;}
+.input-price-wrap .pay-label{color: #cccccc; line-height: 1.2rem;text-indent: .45rem;font-size: .32rem}
+.input-price-wrap input{
+    padding: 0;
+    width: 3.5rem;
+    font-size: .48rem;
+    border: none;
+    height: 78%;
+    background: #fff;
+    color: #000000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: .25rem;
+    font-family: "Microsoft Yahei",sans-serif,Arial,Roboto;
+    margin: auto;
+}
+.input-price-wrap.focus:before{
+    font-size: .45rem;
+    position: absolute;
+    right: 0.05rem;
+    top: 0;
+    bottom: 0;
+    line-height: 1.2rem;
+    content: '|';
+    display: block;
+    animation: input_focus 1s infinite steps(1, start);
+    -webkit-animation:input_focus 1s infinite steps(1, start);
+}
+@keyframes input_focus
+ {
+    0%,55% {
+        opacity: 1;}
+    100% {opacity: 0;}
+ }
+@-webkit-keyframes input_focus
+{
+    0%,55% {
+        opacity: 1;}
+    100% {opacity: 0;}
+}
+
+.keyboard{position: fixed;bottom: 0;width: 100%;}
+.keyboard footer{    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: -1;text-align: center;font-size: .24rem;height: .8rem;line-height: .8rem;color: #999999;}
+.keyboard .num-btns{box-sizing: border-box;-webkit-box-sizing: border-box; background: #fff;border-top: 1px solid #e2e2e2;border-right: 1px solid #e2e2e2; float: left;width: 75%;}
+.keyboard .num-btns .btn-num:nth-of-type(3n){
+    border-right: 0;
+}
+.btn-num{text-decoration: none; line-height: 1.05rem; float: left;width: 33.3333%;border-bottom: 1px solid #e2e2e2; border-right: 1px solid #e2e2e2;box-sizing: border-box;-webkit-box-sizing: border-box;height: 1.05rem;text-align: center;color: #333;font-size: .566rem;}
+.btn-keyboard{
+    position: relative;
+}
+
+.btn-keyboard:after{
+    background: url(/static/images/project/edu/keyboard.png)no-repeat;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;bottom: 0;left: 0;right: 0;margin: auto;
+    width: .74rem;
+    height: .54rem;
+}
+
+.btn-cancel{border-top: 1px solid #e2e2e2;-webkit-box-sizing: border-box;box-sizing: border-box; background: #fff; position: relative; display: block;width:100%;line-height: 1.05rem;height: 1.05rem;}
+.btn-cancel:after{
+    content: '';
+    background: url(/static/images/project/edu/calcel.png)no-repeat;
+    width: .60rem;
+    height: .42rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;left: 0;right: 0;margin: auto;
+}
+.btn-keyboard:after,.btn-cancel:after{background-size: cover;}
+.btn-confirm{ margin-left: -1px; position: relative; background: #d0d5db; display: block; height: 3.15rem;width: 100%;font-size: .5rem;color: #333;word-break: break-all;}
+.btn-confirm:after{
+    word-break: break-all;
+    content: '确认刷票';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    width: 1.2rem;
+    height: 1.3rem;
+}
+.opt-btn{width: 25%;
+    float: left;}
+.keyboard-input{display: none;}
+.btn-confirm.active{
+    color: #fff;
+background: #04be02;
+}
+
+
+
+/**dialog 样式*/
+.dialog h3{margin: 0;padding: 0;font-weight: normal;}
+.dialog{ font-size: .32rem; position: fixed;top:0;bottom:0;width: 100%;height: 100%;background: rgba(0,0,0,.4);display: inline-block;text-align: center;}
+.dialog:before{vertical-align: middle;height: 100%; display: inline-block;content: '';text-align: center;}
+.dialog .dialog-wrap{position: relative; vertical-align: middle; border-radius: 5px;display: inline-block;width: 5.6rem;box-sizing: border-box;-webkit-box-sizing: border-box; padding: .3rem;background: #fff;}
+.dialog .dlg-title{line-height: .6rem;font-size: .32rem;color: #000;font-weight: 500;}
+.dialog .dlg-sub-title{font-family:"Microsoft Yahei";line-height: .6rem;font-size: .36rem;color: #000;}
+.dialog input{box-sizing: border-box;-webkit-box-sizing: border-box; text-indent: .3rem; margin-top: .1rem; font-size:.32rem;width: 100%;border: 1px solid #e2e2e2;border-radius: 5px;height: .9rem;}
+.dialog .btn{
+    text-decoration: none;
+    display: inline-block;
+    width: 2.4rem;
+    height: .95rem;
+    line-height: .95rem;
+    color: #666666;
+    font-size: .34rem;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #e2e2e2;
+}
+.dialog .close{content: ''; background: url(../images/icon_close.jpg)no-repeat; position:absolute;width: .26rem;height: .26rem;top: .4rem;left: .3rem; background-size: 100%;}
+.dialog .btns{margin-top: .4rem;}
+.dialog .btn-white{background: #fff;}
+.dialog .btn-active{border: none; background: #1aad19;color: #fff;}
+.dialog .dlg-footer{text-align: right;line-height: .8rem;margin: .1rem;font-size: .28rem;color: #333}
+.dialog .dlg-footer a{color:#929292; }
+.dialog .wxpay-dlg-wrap{display: none;}
+
+input{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline:none;
+    -webkit-appearance: none;
+}
