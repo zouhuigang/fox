@@ -1,0 +1,390 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src="website/js/jquery.js"></script>
+		<script type="text/javascript" src="photobooth_min.js"></script>
+		<script type="text/javascript" src="website/js/script.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+		<link type="text/css" rel="stylesheet" media="screen" href="website/css/page.css" />
+		<title>Photobooth.js</title>
+	</head>
+	<body>
+		<ul id="nav">
+			<li>
+				<a href="photobooth_min.js" target="_blank" class="downloadButton">
+					<strong>DOWNLOAD</strong>&nbsp;<small>(12kb)<br />
+					everything in one JS File<br />
+					no Dependencies</small>
+				</a>
+			</li>
+			<li><a class="selected" href="#Demo" title="Demo">Demo</a></li>
+			<li><a href="#Usage" title="Usage">Usage</a></li>
+			<li><a href="#browserSupport" title="Browser Support">Browser Support</a></li>
+			<li><a href="#Api" title="Api">Api</a>
+				<ul>
+					<li><a href="#Photobooth">Photobooth</a></li>
+					<li><a href="#onImage">onImage</a></li>
+					<li><a href="#resize">resize</a></li>
+					<li><a href="#pause">pause</a></li>
+					<li><a href="#resume">resume</a></li>
+					<li><a href="#destroy">destroy</a></li>
+					<li><a href="#forceHSB">forceHSB</a></li>
+					<li><a href="#isSupported">isSupported</a></li>
+				</ul>
+			</li>
+			<li><a href="https://github.com/WolframHempel/photobooth-js" target="_blank">Github Repository</a></li>
+			<li><a href="http://wolframhempel.com/2012/12/06/three-amazing-uses-for-dataurls/" target="_blank">How to save dataURLs</a></li>
+			
+			<li><a href="http://wolframhempel.com/" target="_blank">My Blog</a></li>
+			<!--<li><a href="#dataUrl" title="Data Url">Storing dataUrls as image</a></li>-->
+		</ul>
+		<div id="wrapper">
+			<h1>
+				<a name="Demo">HTML5 Webcam for your website</a>
+			</h1>
+			<div id="example"></div>
+			<div id="gallery"></div>
+			<h2><a name="Usage">Usage</a></h2>
+			<div class="tab_container">
+				<ul class="tabs">
+					<li calls="jquery" class="selected">Usage with jQuery</li>
+					<li calls="standalone" >Usage standalone</li>
+				</ul>
+				<div class="tab_content jquery selected">
+					<code>
+$('#example').photobooth().on("image",function( event, dataUrl ){
+	$( "#gallery" ).append( '&lt;img src="' + dataUrl + '" &gt;');
+});
+					</code>
+				</div>
+				<div class="tab_content standalone">
+					<code>
+container = document.getElementById( "example" );
+gallery = document.getElementById( "gallery" );
+
+myPhotobooth = new Photobooth( container );
+
+myPhotobooth.onImage = function( dataUrl ){
+	var myImage = document.createElement( "img" );
+	myImage.src = dataUrl;
+	gallery.appendChild( myImage );
+};
+					</code>
+				</div>
+			</div>
+
+						<h2><a name="browserSupport">Browser Support</a></h2>
+			<p>
+				Photobooth is supported in all browsers that support navigator.getUserMedia. In Firefox
+				some features are disabled for performance reasons. To override this use <a href="#forceHSB">forceHSB</a>.
+				<em>
+					Please note: For earlier versions of Firefox it might be necessary to set navigator.media.enabled in about:config to true.
+				</em>
+				<table class="browserSupport">
+					<tbody>
+						<tr>
+							<td><img src="website/img/chrome.png" title="Google Chrome" /></td>
+							<td><img src="website/img/firefox.png" title="Mozilla Firefox" /></td>
+							<td><img src="website/img/ie.png" title="Internet Explorer" /></td>
+							<td><img src="website/img/opera.png" title="Opera" /></td>
+							<td><img src="website/img/safari.png" title="Safari" /></td>
+						</tr>
+						<tr>
+							<td class="full">since 21</td>
+							<td class="partial">since 17</td>
+							<td class="none">no</td>
+							<td class="full">since 12</td>
+							<td class="none">no</td>
+						</tr>
+					</tbody>
+				</table>
+			</p>
+			<h2><a name="Api">Api</a></h2>
+			<ul class="Methods">
+				<!--
+				Photobooth
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="Photobooth">new Photobooth( DOMElement );</a></label>
+					<p>
+						Creates the photobooth in the specified DOMElement. If the provided DOMElement isn't attached
+						yet, <a href="#resize">resize()</a> needs to be called to set Photobooth's size.
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).photobooth();
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth = new Photobooth( document.getElementById( "container" ) );
+							</code>
+						</div>
+					</div>
+				</li>
+				<!--
+				onImage
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="onImage">onImage</a></label>
+					<p>
+						The function that Photobooth calls when the user clicks the camera icon. Receives a dataUrl
+						string as an argument
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).on( "image", function( event, dataUrl ){
+	 // do stuff...
+});
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth.onImage = function( dataUrl ){
+	 // do stuff...
+};
+							</code>
+						</div>
+					</div>
+				</li>
+
+				<!--
+				resize
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="resize">resize( with, height );</a></label>
+					<p>
+						Resizes the photobooth to the specified width and height ( in Pixel );
+						<div class="info">Minimum width and height are 200px</div>
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).data( "photobooth" ).resize( 400, 300 );
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth.resize( 400, 300 );
+							</code>
+						</div>
+					</div>
+				</li>
+
+		
+
+				<!--
+				pause
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="pause">pause();</a></label>
+					<p>
+						Closes the videostream, cancels the canvas drawing loop
+						and frees up the webcam. Use <a href="#resume">resume()</a>
+						to continue
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).data( "photobooth" ).pause();
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth.pause();
+							</code>
+						</div>
+					</div>
+				</li>
+
+				<!--
+				resume
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="resume">resume();</a></label>
+					<p>
+						Resumes video playback that had previously been paused with <a href="#pause">pause()</a>.
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).data( "photobooth" ).resume();
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth.resume();
+							</code>
+						</div>
+					</div>
+				</li>
+
+				<!--
+				destroy
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="destroy">destroy();</a></label>
+					<p>
+						Destroys the photobooth. Closes the video stream, cancels all
+						outstanding frames and destroys the DOM elements and eventlisteners.
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).data( "photobooth" ).destroy();
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth.destroy();
+							</code>
+						</div>
+					</div>
+				</li>
+
+				<!--
+				forceHSB
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="forceHSB">forceHSB</a></label>
+					<p>
+						Photobooth's hue/saturation/brightness adjusment is by default turned of
+						in Firefox for performance reasons.
+						In order to override this setting, set forceHSB to true.
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+$( '#example' ).data( "photobooth" ).forceHSB = true;
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+myPhotobooth.forceHSB = true;
+							</code>
+						</div>
+					</div>
+				</li>
+
+				<!--
+				isSupported
+				-->
+				<li class="docEntry">
+					<div class="gradient"></div>
+					<label><a name="isSupported">isSupported</a></label>
+					<p>
+						is true if the browser supports webcams ( getUserMedia )
+						and false if not.
+					</p>
+					<div class="tab_container">
+						<ul class="tabs">
+							<li calls="jquery" class="selected">jQuery</li>
+							<li calls="standalone" >standalone</li>
+						</ul>
+						<div class="tab_content jquery selected">
+							<code>
+if( !$( '#example' ).data( "photobooth" ).isSupported )
+{
+	// do stuff...
+}
+							</code>
+						</div>
+						<div class="tab_content standalone">
+							<code>
+if( !myPhotobooth.isSupported )
+{
+	// do stuff...
+}
+							</code>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<!--
+			<h2><a name="dataUrl">Storing dataUrls as image</a></h2>
+			The user clicked the camera icon, your <code>onImage()</code> function get's called and receives a dataUrl... now what?
+
+			<h3>In the Browser</h3>
+
+			<h3>Sending the image to the server</h3>
+
+			<h3>Storing the image on the server</h3>
+			Storing your dataUrl as an image is easy when you know how. A dataUrl consists of two parts, seperated by a come: a meta-data section at 
+			the start and the actual data
+
+			<code>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAA...</code>
+
+			The String after the comma is base64 encoded binary data. So in order to save it as an image you need to
+
+			1) Split the dataUrl on the first comma
+			2) base64 decode the data ( emphasize on DECODE, not encode )
+			Every major serverside language has a built in way of doing that. E.g.
+
+			PHP 
+			$dataUrlParts = explode( ",", $dataUrl);
+			base64_decode( $dataUrlParts[ 1 ] );
+
+			
+			Node.js
+			var dataUrl = "data:image/jpeg;base64,/9j/4AAQSkZJRgA...";
+			var buffer = new Buffer( dataUrl.split( "," )[ 1 ], 'base64');
+			require( "fs" ).writeFileSync( "image.jpg", buffer.toString( 'binary' ), "binary" );
+
+			3) Save the result to a file and name it yourImage.png ( or jpeg, depending on the dataUrl type )
+		-->
+		</div>
+		<script type="text/javascript" src="website/js/hijs.js"></script>
+		<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-36761306-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	</body>
+</html>

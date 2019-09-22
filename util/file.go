@@ -7,7 +7,10 @@
 package util
 
 import (
+	"log"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 // 检查文件或目录是否存在
@@ -54,4 +57,13 @@ func isFileOrDir(filename string, decideDir bool) bool {
 		return isDir
 	}
 	return !isDir
+}
+
+//获取当前执行的路径
+func GetCurrentDirectory() string {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0])) //返回绝对路径  filepath.Dir(os.Args[0])去除最后一个元素的路径
+	if err != nil {
+		log.Fatal(err)
+	}
+	return strings.Replace(dir, "\\", "/", -1) //将\替换成/
 }

@@ -15,6 +15,20 @@
 	fox wiki
 
 
+---
+
+### 安装皮肤
+
+# 创建 themes 目录
+
+	$ cd fox.theme
+	$ git clone https://github.com/zouhuigang/wiki.git
+
+# 运行主题
+
+	fox wiki --theme=wiki
+
+
 ### 正在开发的开源库
 
 

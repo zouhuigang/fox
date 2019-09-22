@@ -1,0 +1,84 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body{font: 14px/1.5 "Microsoft Yahei","arial"; min-width: 320px; margin:0px; padding:0px;}
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form, input, select, button, textarea, iframe, table, th, td { margin: 0; padding:0;font: 14px/1.5 "Microsoft Yahei","arial";}img{border:0 none; vertical-align:top; width:100%}ul, li{list-style-type:none;}
+img.face{width:auto}
+input,button,textarea{outline:none;border:0;vertical-align:middle;border:0;font-family:Arial}
+input[type="submit"],input[type="reset"],input[type="button"],button {-webkit-appearance:none;border-radius:0}
+select{-webkit-appearance:none;-moz-appearance:none;appearance:none}
+textarea{resize:none}
+a, a:visited{color:#444; text-decoration:none}
+.pd10{padding:10px;}
+a:hover{color:#f39a2c}
+*,
+ *:before,
+ *:after {
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+ }
+/*clearfix*/
+.clearfix:before,.clearfix:after{content:".";display:block;height:0;overflow:hidden;}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1;/* IE < 8 */}
+.row:before,.row:after{content:".";display:block;height:0;overflow:hidden;}
+.row:after{clear:both;}
+.row{zoom:1;/* IE < 8 */}
+
+.tr:before,.tr:after{content:".";display:block;height:0;overflow:hidden;}
+.tr:after{clear:both;}
+.tr{zoom:1;/* IE < 8 */}
+.mTop10{ margin-top:10px;}
+.pTop45{ padding-top:45px;}
+.pTop200{ padding-top:230px; padding-bottom:50px}
+
+.header{ height:45px; line-height:45px; position:fixed; top:0; left:0p; width:100%; text-align:center; background:#fbfbfb; font-size:16px; border-bottom:solid 1px #e3e2e2; z-index:1000}
+.add{ position:absolute; top:7px; right:5px; width:30px; height:30px; display:block; z-index:100; cursor:pointer}
+.add img{ width:100%}
+.dlBox{padding:10px;}
+.dlBox dl{ margin-bottom:10px;}
+.dlBox dl a{display:block; background:#fff; padding:10px;}
+.dlBox dl dt{ position:relative; padding-right:80px; font-size:15px; color:#333;}
+.dlBox dl dt span.zt0{display:inline-block; padding:1px 10px; color:#fff; background:#00c806; border-radius:5px; position:absolute; top:0; right:0; font-size:14px;}
+.dlBox dl dt span.zt1{display:inline-block; padding:1px 10px; color:#fff; background:#999999; border-radius:5px; position:absolute; top:0; right:0; font-size:14px;}
+.dlBox dl dd{font-size:13px; color:#999; margin-top:10px;}
+
+.alertWindow{width:100%; height:190px; background:rgba(0,0,0,0); position:absolute; top:0; left:0; z-index:10000; display:block;}
+.alertWindow .alertWindow-Header{ height:45px; line-height:45px; background:#fbfbfb; font-size:16px; text-align:center; position:relative; border-bottom:solid 1px #e3e2e2}
+.alertWindow .alertWindow-Header .colose{position:absolute; top:7px; right:5px; width:30px; height:30px; display:block; z-index:100; cursor:pointer}
+.alertWindow  .alertWindwo-From{ padding:10px; background:#eeeeee;}
+.inputBar{ background:#ffffff; border:solid 1px #e3e2e2; border-radius:5px; padding:0 5px; margin-bottom:10px;}
+.inputBar input{width:100%; height:35px; font-family:"Microsoft Yahei"}
+.inputBar textarea{width:100%; height:85px; font-family:"Microsoft Yahei"}
+input.btn{ width:100%; display:block; background:#0091fc; height:30px; color:#fff; font-size:16px; text-align:center; border-radius:5px;}
+
+
+
+
+
+/*返回顶部*/
+.backToTop{background:url(../images/backtop.png) no-repeat center; width:40px; height:40px; background-size:auto 40px; position:fixed; z-index:1000; bottom:15px; right:10px;}
+
+/*返回按钮*/
+.back{ position:fixed; width:55px; height:55px; background:rgba(255,255,255,0.5); border:solid 1px #b0b0b1; left:10px; bottom:10px;}
+.back img{width:100%;}
+
+
+
+
+@media screen and (max-width:320px) {
+/*----------------积分商城--------------*/
+
+}
+
+
+@media (device-width:375px) and (-webkit-min-device-pixel-ratio:2){/* 兼容iphone 6 */
+
+
+}
+@media (device-width:414px) and (-webkit-min-device-pixel-ratio:3.0){/* 兼容iphone6 plus */
+
+
+
+
+}

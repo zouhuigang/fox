@@ -3,6 +3,7 @@ package parse
 import (
 	"fmt"
 	"fox/inits/bindata/conf"
+	"fox/util"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/zouhuigang/golog"
 	"gopkg.in/yaml.v2"
+	// "fox/config"
 )
 
 const (
@@ -27,12 +29,13 @@ ____________________________________O/_______
 )
 
 type MyEnv struct {
-	Root string
-	Env  struct {
+	Root    string //程序执行路径
+	CmdRoot string //命令行执行路径
+	Env     struct {
 		Weburl      string `yaml:"weburl"`
 		TemplateDir string `yaml:"template_dir"`
 		Version     string `yaml:"version"`
-		Github string `yaml:"github"`
+		Github      string `yaml:"github"`
 	}
 }
 
@@ -82,8 +85,13 @@ func EnvParse() {
 
 		EnvConfig.Root = curDir[:pos]
 	}
+
+	EnvConfig.CmdRoot = util.GetCurrentDirectory()
 	fmt.Printf("%s%s\n", banner, EnvConfig.Env.Github)
 	golog.Info("Root path:" + EnvConfig.Root)
+	golog.Info("CmdRoot path:" + EnvConfig.CmdRoot)
 	golog.Info("version:" + EnvConfig.Env.Version)
 
+	
+	
 }
