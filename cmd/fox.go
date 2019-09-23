@@ -17,8 +17,8 @@ func (b *commandsBuilder) newFoxCmd() *foxCmd {
 		Long:  `fox is the main command...`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cfgInit := func(c *commandeer) error {
-				
-					c.Set("disableLiveReload", true)
+
+				c.Set("disableLiveReload", true)
 				return nil
 			}
 
@@ -28,7 +28,7 @@ func (b *commandsBuilder) newFoxCmd() *foxCmd {
 				return err
 			}
 			cc.c = c
-			return nil
+			return c.build()
 		},
 	})
 

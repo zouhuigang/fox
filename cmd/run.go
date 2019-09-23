@@ -1,15 +1,17 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
+	"fmt"
 	"fox/config"
 	"strings"
+
+	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
-	"fmt"
+	"github.com/zouhuigang/golog"
 )
 
 type Response struct {
-	Err error
+	Err     error
 	Command *cobra.Command
 }
 
@@ -28,10 +30,9 @@ func Execute(args []string) Response {
 	return resp
 }
 
-
 //挂载配置
-func initializeConfig(mustHaveConfigFile, running bool,h *foxBuilderCommon,f flagsToConfigHandler,doWithCommandeer func(c *commandeer) error) (*commandeer, error) {
-
+func initializeConfig(mustHaveConfigFile, running bool, h *foxBuilderCommon, f flagsToConfigHandler, doWithCommandeer func(c *commandeer) error) (*commandeer, error) {
+	fmt.Println("initializeConfig\n")
 	c, err := newCommandeer(mustHaveConfigFile, running, h, f, doWithCommandeer)
 	if err != nil {
 		return nil, err
@@ -41,14 +42,16 @@ func initializeConfig(mustHaveConfigFile, running bool,h *foxBuilderCommon,f fla
 
 }
 
-
 //保存全局的值
 func initializeFlags(cmd *cobra.Command, cfg config.Provider) {
+	fmt.Println("initializeFlags\n")
+	golog.Info("initializeFlags")
 	persFlagKeys := []string{
 		"debug",
 		"verbose",
 		"logFile",
 	}
+
 	flagKeys := []string{
 		"baseURL",
 		"buildWatch",
@@ -56,6 +59,7 @@ func initializeFlags(cmd *cobra.Command, cfg config.Provider) {
 		"source",
 		"theme",
 		"themesDir",
+		"fox_env_test",
 	}
 
 	// Will set a value even if it is the default.
@@ -73,7 +77,6 @@ func initializeFlags(cmd *cobra.Command, cfg config.Provider) {
 	for _, key := range flagKeysForced {
 		setValueFromFlag(cmd.Flags(), key, cfg, "", true)
 	}
-
 	// Set some "config aliases"
 	//setValueFromFlag(cmd.Flags(), "destination", cfg, "publishDir", false)
 	//setValueFromFlag(cmd.Flags(), "i18n-warnings", cfg, "logI18nWarnings", false)
@@ -108,6 +111,6 @@ func setValueFromFlag(flags *flag.FlagSet, key string, cfg config.Provider, targ
 
 	}
 
-	theme:=  cfg.GetString("theme")
-	fmt.Println("====theme===",theme)
+	s := cfg.GetString("fox_env_test")
+	fmt.Println("====theme===", s)
 }

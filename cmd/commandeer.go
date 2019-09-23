@@ -1,23 +1,11 @@
 package cmd
 
 import (
+	"fmt"
 	"fox/config"
 
 	"github.com/spf13/cobra"
 )
-
-type commandeer struct {
-	h                *foxBuilderCommon
-	ftch             flagsToConfigHandler
-	configFiles      []string
-	doWithCommandeer func(c *commandeer) error
-
-	serverPorts []int
-	configured  bool
-	Cfg config.Provider `json:"-"`
-	// Any error from the last build.
-	buildErr error
-}
 
 func newCommandeer(mustHaveConfigFile, running bool, h *foxBuilderCommon, f flagsToConfigHandler, doWithCommandeer func(c *commandeer) error, subCmdVs ...*cobra.Command) (*commandeer, error) {
 
@@ -39,15 +27,42 @@ func (c *commandeer) Set(key string, value interface{}) {
 
 func (c *commandeer) loadConfig(mustHaveConfigFile, running bool) error {
 
-	// doWithConfig := func(cfg config.Provider) error {
+	//传新的配置
+	doWithConfig := func(cfg config.Provider) error {
 
-	// 	if c.ftch != nil {
-	// 		c.ftch.flagsToConfig(cfg)
-	// 	}
+		if c.ftch != nil {
+			fmt.Printf("loadConfig\n")
+			c.ftch.flagsToConfig(cfg)
+		}
 
-	// 	cfg.Set("workingDir", dir)
-	// 	cfg.Set("environment", environment)
-	// 	return nil
-	// }
+		cfg.Set("workingDir", "sss")
+		cfg.Set("environment", "bbbb")
+		return nil
+	}
+
+	//带回调函数
+	doWithCommandeer := func(cfg config.Provider) error {
+		c.Cfg = cfg
+		if c.doWithCommandeer == nil {
+			return nil
+		}
+		err := c.doWithCommandeer(c)
+		return err
+	}
+
+	//写入配置
+	config, err := config.LoadConfig(doWithCommandeer, doWithConfig)
+	if err != nil {
+		return err
+	}
+
+	config.Set("fox_env_test", "fox env test success")
+	s := config.GetString("fox_env_test")
+	fmt.Printf("=============%s\n", s)
+	return nil
+}
+
+func (c *commandeer) build() error {
+
 	return nil
 }

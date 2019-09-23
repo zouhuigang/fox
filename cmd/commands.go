@@ -1,28 +1,8 @@
 package cmd
 
 import (
-	"fox/config"
-
 	"github.com/spf13/cobra"
 )
-
-type cmder interface {
-	flagsToConfigHandler
-	getCommand() *cobra.Command
-}
-type flagsToConfigHandler interface {
-	flagsToConfig(cfg config.Provider)
-}
-
-type baseBuilderCmd struct {
-	*baseCmd
-	*commandsBuilder
-}
-
-type commandsBuilder struct {
-	foxBuilderCommon
-	commands []cmder
-}
 
 func (b *commandsBuilder) newBuilderCmd(cmd *cobra.Command) *baseBuilderCmd {
 	bcmd := &baseBuilderCmd{commandsBuilder: b, baseCmd: &baseCmd{command: cmd}}
@@ -31,7 +11,6 @@ func (b *commandsBuilder) newBuilderCmd(cmd *cobra.Command) *baseBuilderCmd {
 	bcmd.foxBuilderCommon.handleFlags(cmd)
 	return bcmd
 }
-
 
 func newCommandsBuilder() *commandsBuilder {
 	return &commandsBuilder{}

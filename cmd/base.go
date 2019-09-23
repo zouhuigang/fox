@@ -1,12 +1,10 @@
 package cmd
-import 
-("github.com/spf13/cobra"
-"fox/config"
-)
-type baseCmd struct {
-	command *cobra.Command
-}
 
+import (
+	"fox/config"
+
+	"github.com/spf13/cobra"
+)
 
 func newBaseCmd(cmd *cobra.Command) *baseCmd {
 	return &baseCmd{command: cmd}
