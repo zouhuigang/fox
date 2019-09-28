@@ -57,6 +57,7 @@ func initializeFlags(cmd *cobra.Command, cfg config.Provider) {
 		"buildWatch",
 		"cfgFile",
 		"source",
+		"layoutDir",
 		"theme",
 		"themesDir",
 		"fox_env_test",
@@ -111,6 +112,7 @@ func setValueFromFlag(flags *flag.FlagSet, key string, cfg config.Provider, targ
 
 	}
 
-	s := cfg.GetString("fox_env_test")
-	fmt.Println("====theme===", s)
+	// s := cfg.GetString("fox_env_test")
+	s := cfg.GetString(key)
+	fmt.Printf("====%s==%s=\n", key, s)
 }

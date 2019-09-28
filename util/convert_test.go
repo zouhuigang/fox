@@ -7,8 +7,8 @@
 package util_test
 
 import (
+	"fox/util"
 	"testing"
-	. "util"
 )
 
 type model struct {

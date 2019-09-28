@@ -30,6 +30,7 @@ func (b *commandsBuilder) addAll() *commandsBuilder {
 	b.addCommands(
 		b.newWikiCmd(),
 		newVersionCmd(),
+		newEnvCmd(),
 	)
 
 	return b

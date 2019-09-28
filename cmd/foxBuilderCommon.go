@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	// "fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -15,9 +15,13 @@ func (cc *foxBuilderCommon) handleCommonBuilderFlags(cmd *cobra.Command) {
 }
 
 func (cc *foxBuilderCommon) handleFlags(cmd *cobra.Command) {
-	fmt.Println("foxBuilderCommon handleFlags")
+	// fmt.Println("foxBuilderCommon handleFlags")
 	cc.handleCommonBuilderFlags(cmd)
+	cmd.Flags().StringP("layoutDir", "l", "", "filesystem path to layout directory")
 	cmd.Flags().StringSliceP("theme", "t", []string{}, "themes to use (located in /fox.themes/THEMENAME/)")
-	_ = cmd.Flags().SetAnnotation("theme", cobra.BashCompSubdirsInDir, []string{"themes"})
+	_ = cmd.Flags().SetAnnotation("theme", cobra.BashCompSubdirsInDir, []string{"fox.theme"})
+
+	//handle_subdirs_in_dir_flag themes
+	// fmt.Printf("theme_%s_\n", cmd.Name())
 
 }

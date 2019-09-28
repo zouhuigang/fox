@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fox/server"
-	"strconv"
 	"net"
+	"strconv"
+
 	"github.com/spf13/cobra"
 )
 
@@ -36,6 +37,20 @@ func (this *commandsBuilder) newWikiCmdSignaled(stop <-chan bool) *wikiCmd {
 
 func (wk *wikiCmd) server(cmd *cobra.Command, args []string) error {
 	// destination, _ := cmd.Flags().GetString("destination")
-	server.Run(net.JoinHostPort(wk.bind, strconv.Itoa(wk.port)))
-	return nil
+
+	//.Cfg.GetString("publishDir")
+	//挂载配置
+	//c, err := initializeConfig(true, true, &sc.hugoBuilderCommon, sc, cfgInit)
+
+	cfgInit := func(c *commandeer) error {
+		c.Set("token", "foxToken")
+		return nil
+	}
+
+	c, err := initializeConfig(true, false, &wk.foxBuilderCommon, wk, cfgInit)
+	if err != nil {
+		return err
+	}
+
+	return server.Run(c.Cfg, net.JoinHostPort(wk.bind, strconv.Itoa(wk.port)))
 }
