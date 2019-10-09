@@ -1,18 +1,19 @@
 package http
 
 import (
-
 	"bytes"
 	"fmt"
 
-	"github.com/labstack/echo"
+	"fox/inits/parse"
+	"fox/util"
 	"html" //解析mysql中的特殊字符
 	"html/template"
 	"log"
 	"net/http"
-"fox/util"
-	"fox/inits/parse"
-	
+	"path"
+
+	"github.com/labstack/echo"
+
 	"github.com/zouhuigang/golog"
 	"github.com/zouhuigang/package/ztime"
 	// "github.com/zouhuigang/php"
@@ -159,18 +160,28 @@ const (
 )
 
 // Render html 输出
+/*
+windows:D:\\workspacego\\src\\fox\\fox.theme\\wiki\\
+或D:/workspacego/src/fox/fox.theme/wiki/
+
+*/
 func Render(ctx echo.Context, contentTpl string, data map[string]interface{}) error {
 	if data == nil {
 		data = map[string]interface{}{}
 	}
 
+	theme := path.Join(parse.EnvConfig.ThemeDir, parse.EnvConfig.Theme)
+	//theme = "fox.theme/wiki/template/"
+	//theme = "D:/workspacego/src/fox/fox.theme/wiki/"
 
 	//contentTpl = LayoutTpl + "," + contentTpl
 	// 为了使用自定义的模板函数，首先New一个以第一个模板文件名为模板名。
 	// 这样，在ParseFiles时，新返回的*Template便还是原来的模板实例
 	htmlFiles := strings.Split(contentTpl, ",")
 	for i, contentTpl := range htmlFiles {
-		htmlFiles[i] = parse.EnvConfig.Env.TemplateDir + contentTpl
+		//htmlFiles[i] = filepath.Join(theme, parse.EnvConfig.Env.TemplateDir, contentTpl)
+		//htmlFiles[i] = theme + contentTpl
+		htmlFiles[i] = path.Join(theme , parse.EnvConfig.Env.TemplateDir , contentTpl)
 	}
 
 	FirstTpl := htmlFiles[0]
@@ -184,7 +195,14 @@ func Render(ctx echo.Context, contentTpl string, data map[string]interface{}) er
 		return err
 	}
 
-	return executeTpl(ctx, tpl, data)
+	//fmt.Println(tpl) //success:&{<nil> 0xc000210340 0xc000212100 0xc0002062d0},error:&{<nil> 0xc000054d80 <nil> 0xc0000c0dc0}
+
+	err = executeTpl(ctx, tpl, data)
+	if err != nil {
+		golog.Errorf("executeTpl error %s\n", err)
+		return err
+	}
+	return nil
 }
 
 // RenderAdmin html 输出
@@ -253,10 +271,7 @@ func executeTpl(ctx echo.Context, tpl *template.Template, data map[string]interf
 		tpl.Parse(`{{define "css"}}{{end}}`)
 	}
 
-	
-
 	// websocket主机
-	
 
 	//定义常量
 	data["WEBROOT"] = parse.EnvConfig.Env.Weburl
@@ -269,6 +284,6 @@ func executeTpl(ctx echo.Context, tpl *template.Template, data map[string]interf
 		log.Println("解析模板出错", err)
 		return err
 	}
-	log.Println("正在解析模板", tpl)
+	// log.Println("正在解析模板", buf.String())
 	return ctx.HTML(http.StatusOK, buf.String())
 }

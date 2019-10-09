@@ -32,9 +32,10 @@ func Execute(args []string) Response {
 
 //挂载配置
 func initializeConfig(mustHaveConfigFile, running bool, h *foxBuilderCommon, f flagsToConfigHandler, doWithCommandeer func(c *commandeer) error) (*commandeer, error) {
-	fmt.Println("initializeConfig\n")
+	// fmt.Println("initializeConfig\n")
 	c, err := newCommandeer(mustHaveConfigFile, running, h, f, doWithCommandeer)
 	if err != nil {
+		golog.Error("initializeConfig" + err.Error())
 		return nil, err
 	}
 
@@ -44,8 +45,8 @@ func initializeConfig(mustHaveConfigFile, running bool, h *foxBuilderCommon, f f
 
 //保存全局的值
 func initializeFlags(cmd *cobra.Command, cfg config.Provider) {
-	fmt.Println("initializeFlags\n")
-	golog.Info("initializeFlags")
+	//fmt.Println("initializeFlags\n")
+	//golog.Info("initializeFlags")
 	persFlagKeys := []string{
 		"debug",
 		"verbose",
@@ -103,6 +104,7 @@ func setValueFromFlag(flags *flag.FlagSet, key string, cfg config.Provider, targ
 		case "stringSlice":
 			bv, _ := flags.GetStringSlice(key)
 			cfg.Set(configKey, bv)
+			//fmt.Printf("flags key:%s type:%s value:%s\n", key, f.Value.Type(), bv)
 		case "int":
 			iv, _ := flags.GetInt(key)
 			cfg.Set(configKey, iv)
@@ -112,7 +114,7 @@ func setValueFromFlag(flags *flag.FlagSet, key string, cfg config.Provider, targ
 
 	}
 
-	// s := cfg.GetString("fox_env_test")
-	s := cfg.GetString(key)
-	fmt.Printf("====%s==%s=\n", key, s)
+	// // s := cfg.GetString("fox_env_test")
+	// s := cfg.GetString(key)
+	// fmt.Printf("====%s==%s=\n", key, s)
 }

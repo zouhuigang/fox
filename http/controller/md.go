@@ -6,7 +6,6 @@ import (
 	// "fmt"
 	// "html/template"
 	"fox/inits/parse"
-	"log"
 	"os"
 
 	"github.com/labstack/echo"
@@ -36,19 +35,6 @@ func (this *MdController) RegisterRoute(g *echo.Group) {
 
 func (MdController) Editor(ctx echo.Context) error {
 	data := map[string]interface{}{}
-
-	//来源论坛
-	kw := ctx.QueryParam("kw")
-	log.Println(kw)
-
-	data["kw"] = kw
-	// mp3, _ := model.MdModelMp3List(10)
-	// data["mp3"] = mp3
-	// if model.Publics.IsMobile(ctx) {
-	// 	return render(ctx, "markdown/m-editor.html,common/template.html", data)
-	// } else {
-	// 	return render(ctx, "markdown/editor.html,common/template.html", data)
-	// }
 
 	meta := make([]*TitleMeta, 0)
 	// meta.Title="你好"

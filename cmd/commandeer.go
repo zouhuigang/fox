@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"fox/config"
 
 	"github.com/spf13/cobra"
@@ -31,7 +30,7 @@ func (c *commandeer) loadConfig(mustHaveConfigFile, running bool) error {
 	doWithConfig := func(cfg config.Provider) error {
 
 		if c.ftch != nil {
-			fmt.Printf("loadConfig\n")
+			// fmt.Printf("loadConfig\n")
 			c.ftch.flagsToConfig(cfg)
 		}
 
@@ -57,8 +56,8 @@ func (c *commandeer) loadConfig(mustHaveConfigFile, running bool) error {
 	}
 
 	config.Set("fox_env_test", "fox env test success")
-	s := config.GetString("fox_env_test")
-	fmt.Printf("=============%s\n", s)
+	// s := config.GetString("fox_env_test")
+	// fmt.Printf("=============%s\n", s)
 	return nil
 }
 

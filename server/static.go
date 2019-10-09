@@ -1,10 +1,13 @@
 package server
 
 import (
+	"fox/inits/parse"
+	"path"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
+
 type staticRootConf struct {
 	root   string
 	isFile bool
@@ -20,11 +23,12 @@ var staticFileMap = map[string]staticRootConf{
 var filterPrefixs = make([]string, 0, 3)
 
 func staticFile(e *echo.Echo) {
+	theme := path.Join(parse.EnvConfig.ThemeDir, parse.EnvConfig.Theme)
+
 	//e.File("/favicon.ico", "static/favicon.ico")
 	for prefix, rootConf := range staticFileMap {
 		filterPrefixs = append(filterPrefixs, prefix)
-
-		rfile:=rootConf.root
+		rfile := path.Join(theme, rootConf.root)
 		if rootConf.isFile {
 			e.File(prefix, rfile)
 		} else {

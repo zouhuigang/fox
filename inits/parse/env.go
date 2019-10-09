@@ -2,6 +2,7 @@ package parse
 
 import (
 	"fmt"
+	"fox/config"
 	"fox/inits/bindata/conf"
 	"fox/util"
 	"os"
@@ -29,9 +30,12 @@ ____________________________________O/_______
 )
 
 type MyEnv struct {
-	Root    string //程序执行路径
-	CmdRoot string //命令行执行路径
-	Env     struct {
+	Root     string          //程序执行路径
+	CmdRoot  string          //命令行执行路径
+	CmdCfg   config.Provider //命令行输入的命令
+	ThemeDir string          //主题目录
+	Theme    string          //主题
+	Env      struct {
 		Weburl      string `yaml:"weburl"`
 		TemplateDir string `yaml:"template_dir"`
 		Version     string `yaml:"version"`
@@ -50,7 +54,7 @@ func fileExist(filename string) bool {
 	return err == nil || os.IsExist(err)
 }
 
-func EnvParse() {
+func EnvParse(cmdCfg config.Provider) {
 	envData, err := conf.Asset("conf/env.yml")
 	if err != nil {
 		golog.Fatalf("Error. %s", err)
@@ -87,11 +91,20 @@ func EnvParse() {
 	}
 
 	EnvConfig.CmdRoot = util.GetCurrentDirectory()
+
+	//读取cmd
+	EnvConfig.CmdCfg = cmdCfg
+	themeList := cmdCfg.GetStringSlice("theme")
+	if len(themeList) > 0 {
+		EnvConfig.Theme = themeList[0]
+	} else {
+		EnvConfig.Theme = "wiki"
+	}
+	EnvConfig.ThemeDir = EnvConfig.CmdRoot + "/fox.theme/"
+
 	fmt.Printf("%s%s\n", banner, EnvConfig.Env.Github)
 	golog.Info("Root path:" + EnvConfig.Root)
 	golog.Info("CmdRoot path:" + EnvConfig.CmdRoot)
 	golog.Info("version:" + EnvConfig.Env.Version)
 
-	
-	
 }
