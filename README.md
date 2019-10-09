@@ -3,36 +3,16 @@
 ![images](./image/screen.png)
 
 
-### 1.下载安装
+### 1.下载安装fox,并加入环境变量。
 
 
-### 2.使用
+### 2.安装theme
 
-	git clone https://github.com/zouhuigang/fox.wiki.git
+	git clone https://github.com/zouhuigang/fox-theme-wiki --depth=1 fox.theme/wiki
+
 
 ### 3.当前命令行打开,运行
 
-	fox wiki
-
-
----
-
-### 安装皮肤
-
-# 创建 themes 目录
-
-	$ cd fox.theme
-	$ git clone https://github.com/zouhuigang/wiki.git
-
-# 运行主题
-
 	fox wiki --theme=wiki
-
-
-
-
-
-
-
 
 
