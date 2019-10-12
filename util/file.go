@@ -1,16 +1,13 @@
-// Copyright 2014 The StudyGolang Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-// http://studygolang.com
-// Author: polaris	polaris@studygolang.com
-
 package util
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
+	"github.com/zouhuigang/package/zfileutil"
 )
 
 // 检查文件或目录是否存在
@@ -66,4 +63,69 @@ func GetCurrentDirectory() string {
 		log.Fatal(err)
 	}
 	return strings.Replace(dir, "\\", "/", -1) //将\替换成/
+}
+
+func Walkdir(path string) (error, []zfileutil.FileList) {
+	var wg sync.WaitGroup
+
+	//读取文件
+	var filelist []zfileutil.FileList
+	c := make(chan []zfileutil.FileList)
+	is_success := make(chan bool)
+
+	dir, err := ioutil.ReadDir(path)
+	if err != nil {
+		return err, nil
+	}
+	for _, fi := range dir {
+		fpath := filepath.FromSlash(path + "/" + fi.Name())
+
+		if fi.IsDir() {
+			if strings.HasPrefix(fi.Name(), ".") {
+				continue
+			}
+			if strings.HasPrefix(fi.Name(), "..") {
+				continue
+			}
+			if strings.Contains(fi.Name(), "lost+found") {
+				continue
+			}
+
+			if strings.Contains(fi.Name(), "fox.theme") {
+				continue
+			}
+			wg.Add(1)
+			go scanDir(&wg, fpath, c)
+		} else {
+			cur_file := zfileutil.GetFormatFileInfo(fpath, fi)
+			filelist = append(filelist, cur_file)
+		}
+	}
+
+	//一直阻塞直到chan c关闭
+	go func() {
+		for {
+			select {
+			case result := <-c:
+				filelist = append(filelist, result...)
+			case <-is_success:
+				return
+			}
+		}
+	}()
+
+	wg.Wait()
+
+	is_success <- true
+	return nil, filelist
+
+}
+
+func scanDir(wg *sync.WaitGroup, rootPath string, c chan []zfileutil.FileList) {
+	defer wg.Done()
+	filelist := make([]zfileutil.FileList, 0)
+	if f, _ := zfileutil.ScanFiles(rootPath); len(f) > 0 {
+		filelist = append(filelist, f...)
+	}
+	c <- filelist
 }
