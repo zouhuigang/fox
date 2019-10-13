@@ -3,6 +3,7 @@ package server
 import (
 	"fox/config"
 	"fox/http/controller"
+	mw "fox/http/middleware"
 	"fox/inits"
 
 	"github.com/labstack/echo"
@@ -16,6 +17,9 @@ func Run(c config.Provider, listen string) error {
 	e := echo.New()
 	e.HideBanner = true
 	staticFile(e)
+
+	//中间件
+	e.Use(mw.CheckStatic())
 
 	frontG := e.Group("")
 	controller.RegisterRoutes(frontG)
