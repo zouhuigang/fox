@@ -5,12 +5,15 @@ import (
 	"fox/system"
 	"io/ioutil"
 	"path"
+	"path/filepath"
 	"time"
 	// "fmt"
 	"fox/inits/parse"
 	"fox/util"
 	"html/template"
+	"io"
 	"os"
+	"strings"
 
 	"github.com/labstack/echo"
 	"github.com/microcosm-cc/bluemonday"
@@ -36,6 +39,9 @@ func (this *MdController) RegisterRoute(g *echo.Group) {
 	g.GET("/", this.Editor)
 	g.POST("/make/file", this.mk)
 	g.POST("/markdown/info", this.mdInfo)
+	g.POST("/markdown/save", this.mdSave)
+	g.POST("/markdown/delete", this.mdDelete)
+	g.POST("/markdown/rename", this.mdRename)
 }
 
 //文件列表
@@ -84,7 +90,7 @@ func scan(rootPath string) (error, []*File_list) { //扫描文件
 		cur_file.Dir = cur_f.Dir
 		cur_file.Path = cur_f.Path
 		cur_file.Ext = cur_f.Ext
-		cur_file.Name = cur_f.Name
+		cur_file.Name = strings.TrimSuffix(cur_f.Name, cur_f.Ext)
 		cur_file.Size = cur_f.Size
 		cur_file.CreatedAt = time.Now()
 		cur_file.ModTime = cur_f.ModTime
@@ -184,5 +190,101 @@ func (this *MdController) mk(ctx echo.Context) error {
 		return system.ResponeJson(ctx, system.ErrUnknown, data)
 	}
 
+	return system.ResponeJson(ctx, system.ErrOk, data)
+}
+
+/*
+const (
+        O_RDONLY int = syscall.O_RDONLY // 只读打开文件和os.Open()同义
+        O_WRONLY int = syscall.O_WRONLY // 只写打开文件
+        O_RDWR   int = syscall.O_RDWR   // 读写方式打开文件
+        O_APPEND int = syscall.O_APPEND // 当写的时候使用追加模式到文件末尾
+        O_CREATE int = syscall.O_CREAT  // 如果文件不存在，此案创建
+        O_EXCL   int = syscall.O_EXCL   // 和O_CREATE一起使用, 只有当文件不存在时才创建
+        O_SYNC   int = syscall.O_SYNC   // 以同步I/O方式打开文件，直接写入硬盘.
+        O_TRUNC  int = syscall.O_TRUNC  // 如果可以的话，当打开文件时先清空文件
+)
+*/
+//写入内容
+func (MdController) mdSave(ctx echo.Context) error {
+	data := map[string]interface{}{}
+	fileName := ctx.FormValue("fileName")
+	content := ctx.FormValue("content")
+
+	if fileName == "" {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件路径不能为空")
+	}
+
+	//检测文件是否存在
+	if !zfile.IsFileExist(fileName) {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件不存在")
+	}
+
+	f, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666) //打开文件
+	if err != nil {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, err.Error())
+	}
+
+	defer f.Close()
+
+	//写入文件
+	n, err := io.WriteString(f, content)
+	if err != nil {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, err.Error())
+	}
+
+	data["n"] = n //字节数
+	return system.ResponeJson(ctx, system.ErrOk, data)
+}
+
+//删除文件
+func (MdController) mdDelete(ctx echo.Context) error {
+	data := map[string]interface{}{}
+	fileName := ctx.FormValue("fileName")
+
+	if fileName == "" {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件路径不能为空")
+	}
+
+	//检测文件是否存在
+	if !zfile.IsFileExist(fileName) {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件不存在")
+	}
+
+	//写入文件
+	err := os.Remove(fileName)
+	if err != nil {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件删除失败"+err.Error())
+	}
+	return system.ResponeJson(ctx, system.ErrOk, data)
+}
+
+//重命名
+func (MdController) mdRename(ctx echo.Context) error {
+	data := map[string]interface{}{}
+	fileName := ctx.FormValue("fileName")
+	newName := ctx.FormValue("newName")
+
+	if fileName == "" {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件路径不能为空")
+	}
+
+	//检测文件是否存在
+	if !zfile.IsFileExist(fileName) {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件不存在")
+	}
+
+	if newName == "" {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "新文件名不能为空")
+	}
+
+	mFilePath := filepath.Dir(fileName)
+	newFileName := path.Join(mFilePath, newName+".md")
+
+	//写入文件
+	err := os.Rename(fileName, newFileName)
+	if err != nil {
+		return system.ResponeJson(ctx, system.ErrUnknown, data, "文件重命名失败"+err.Error())
+	}
 	return system.ResponeJson(ctx, system.ErrOk, data)
 }

@@ -2,7 +2,9 @@
 .exe
 fox.wiki/*
 fox.exe
-
+fox.exe~
 fox.wiki
 
 go.sum
+
+util/file_s.go__
