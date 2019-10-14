@@ -7,6 +7,7 @@ import (
 	"fox/util"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -27,6 +28,7 @@ const (
 ____________________________________O/_______
                                     O\
 `
+	mTheme = `fox.theme`
 )
 
 type MyEnv struct {
@@ -54,6 +56,7 @@ func fileExist(filename string) bool {
 	return err == nil || os.IsExist(err)
 }
 
+//https://blog.csdn.net/ytd7777/article/details/90517422
 func EnvParse(cmdCfg config.Provider) {
 	envData, err := conf.Asset("conf/env.yml")
 	if err != nil {
@@ -100,11 +103,20 @@ func EnvParse(cmdCfg config.Provider) {
 	} else {
 		EnvConfig.Theme = "wiki"
 	}
-	EnvConfig.ThemeDir = EnvConfig.CmdRoot + "/fox.theme/"
+
+	//局部主题是否存在
+	mLocalTheme := path.Join(EnvConfig.CmdRoot, mTheme)
+	mGlobalTheme := path.Join(EnvConfig.Root, mTheme)
+	if fileExist(path.Join(mLocalTheme, EnvConfig.Theme)) {
+		EnvConfig.ThemeDir = mLocalTheme + "/"
+	} else if fileExist(path.Join(mGlobalTheme, EnvConfig.Theme)) {
+		EnvConfig.ThemeDir = mGlobalTheme + "/"
+	}
 
 	fmt.Printf("%s%s\n", banner, EnvConfig.Env.Github)
 	golog.Info("Root path:" + EnvConfig.Root)
 	golog.Info("CmdRoot path:" + EnvConfig.CmdRoot)
+	golog.Info("theme dir:" + EnvConfig.ThemeDir)
 	golog.Info("version:" + EnvConfig.Env.Version)
 
 }
