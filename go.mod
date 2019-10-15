@@ -3,6 +3,7 @@ module fox
 go 1.13
 
 require (
+	github.com/BurntSushi/toml v0.3.1
 	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect
 	github.com/kataras/pio v0.0.0-20190103105442-ea782b38602d // indirect
 	github.com/labstack/echo v3.3.10+incompatible

@@ -7,6 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 )
+const m_Wiki string="wiki"
 
 type wikiCmd struct {
 	*baseBuilderCmd             //继承基础cmd
@@ -23,10 +24,10 @@ func (this *commandsBuilder) newWikiCmdSignaled(stop <-chan bool) *wikiCmd {
 	wiki := &wikiCmd{stop: stop}
 
 	wiki.baseBuilderCmd = this.newBuilderCmd(&cobra.Command{
-		Use:     "wiki",
+		Use:     m_Wiki,
 		Aliases: []string{"wk"},
 		Short:   "wiki server",
-		Long:    `github wiki localhoust server.`,
+		Long:    `github wiki localhost server.`,
 		RunE:    wiki.server,
 	})
 
@@ -52,5 +53,5 @@ func (wk *wikiCmd) server(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return server.Run(c.Cfg, net.JoinHostPort(wk.bind, strconv.Itoa(wk.port)))
+	return server.Run(c.Cfg, net.JoinHostPort(wk.bind, strconv.Itoa(wk.port)),m_Wiki)
 }

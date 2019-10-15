@@ -5,7 +5,8 @@ import (
 	"fox/inits/parse"
 )
 
-func Init(c config.Provider) {
+func Init(c config.Provider, defaultTheme string) {
 	// fmt.Println("theme", c.GetStringSlice("theme"))
-	parse.EnvParse(c)
+	parse.EnvParse(c, defaultTheme)
+	parse.ThemeParse()
 }

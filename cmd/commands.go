@@ -29,6 +29,7 @@ func addCommands(root *cobra.Command, commands ...cmder) {
 func (b *commandsBuilder) addAll() *commandsBuilder {
 	b.addCommands(
 		b.newWikiCmd(),
+		b.newGitBookCmd(),
 		newVersionCmd(),
 		newEnvCmd(),
 	)

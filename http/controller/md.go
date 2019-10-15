@@ -115,14 +115,15 @@ func (MdController) Editor(ctx echo.Context) error {
 	data["meta"] = meta
 	data["flinks"] = "ass"
 
-	var pages string = "markdown/editor.html"
-	pages = fmt.Sprintf("%s,%s", pages, "common/template.html")
-	pages = fmt.Sprintf("%s,%s", pages, "compoents/header.html")
-	pages = fmt.Sprintf("%s,%s", pages, "compoents/leftNav.html")
-	pages = fmt.Sprintf("%s,%s", pages, "compoents/body.html")
-	pages = fmt.Sprintf("%s,%s", pages, "compoents/left2.html")
-	pages = fmt.Sprintf("%s,%s", pages, "compoents/preview.html")
-	pages = fmt.Sprintf("%s,%s", pages, "compoents/save.html")
+	//页面
+	var pages string
+	for index, page := range parse.ThemeConfig.Template.Pages {
+		if index == 0 {
+			pages = fmt.Sprintf("%s", page)
+		} else {
+			pages = fmt.Sprintf("%s,%s", pages, page)
+		}
+	}
 
 	//读取本地文件
 	_, fileList := scan(parse.EnvConfig.CmdRoot)

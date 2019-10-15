@@ -9,9 +9,9 @@ import (
 	"github.com/labstack/echo"
 )
 
-func Run(c config.Provider, listen string) error {
+func Run(c config.Provider, listen string,defaultTheme string) error {
 	//初始化参数
-	inits.Init(c)
+	inits.Init(c,defaultTheme)
 
 	//启动服务
 	e := echo.New()

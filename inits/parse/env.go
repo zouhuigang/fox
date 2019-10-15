@@ -57,7 +57,7 @@ func fileExist(filename string) bool {
 }
 
 //https://blog.csdn.net/ytd7777/article/details/90517422
-func EnvParse(cmdCfg config.Provider) {
+func EnvParse(cmdCfg config.Provider, defaultTheme string) {
 	envData, err := conf.Asset("conf/env.yml")
 	if err != nil {
 		golog.Fatalf("Error. %s", err)
@@ -101,7 +101,7 @@ func EnvParse(cmdCfg config.Provider) {
 	if len(themeList) > 0 {
 		EnvConfig.Theme = themeList[0]
 	} else {
-		EnvConfig.Theme = "wiki"
+		EnvConfig.Theme = defaultTheme
 	}
 
 	//局部主题是否存在
