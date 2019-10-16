@@ -15,10 +15,13 @@ import (
 	"os"
 	"strings"
 
+	"fox/model/markdown"
+
 	"github.com/labstack/echo"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/russross/blackfriday"
 	"github.com/zouhuigang/package/zfile"
+	"github.com/zouhuigang/package/ztime"
 )
 
 type MdController struct{}
@@ -36,7 +39,8 @@ type TitleMeta struct {
 
 //注册路由
 func (this *MdController) RegisterRoute(g *echo.Group) {
-	g.GET("/", this.Editor)
+	g.GET("/", this.pageHandle)
+	g.GET("/*.html", this.pageHandle)
 	g.POST("/make/file", this.mk)
 	g.POST("/markdown/info", this.mdInfo)
 	g.POST("/markdown/save", this.mdSave)
@@ -103,11 +107,77 @@ func scan(rootPath string) (error, []*File_list) { //扫描文件
 	return nil, mFileList
 }
 
-func (MdController) Editor(ctx echo.Context) error {
+type mdInfo struct {
+	Html       template.HTML
+	Md         string
+	Size       int64
+	SizeStr    string
+	ModTime    int64
+	ModTimeStr string
+}
+
+//读取markdown文件信息
+func (this *MdController) readMarkdown(fileName string) (error, *mdInfo) {
+	md := new(mdInfo)
+
+	//检测文件是否存在
+	if zfile.IsFileExist(fileName) {
+		//f, err = ioutil.ReadFile(fileName)
+		// if err != nil {
+		// 	return err, output, f
+		// }
+
+		fi, err := os.Open(fileName)
+		if err != nil {
+			return err, md
+		}
+		defer fi.Close()
+
+		f, err := ioutil.ReadAll(fi)
+		if err != nil {
+			return err, md
+		}
+
+		unsafe := blackfriday.MarkdownCommon(f)
+		outputHtml := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+		md.Html = template.HTML(outputHtml)
+		md.Md = string(f)
+
+		//获取文件信息
+		// Size:    info.Size(),
+		// ModTime: info.ModTime().Unix(),
+		if finfo, err := fi.Stat(); err == nil {
+			md.Size = finfo.Size()
+			md.ModTime = finfo.ModTime().Unix()
+			md.ModTimeStr = ztime.DateInt64("Y-m-d H:i:s", md.ModTime)
+			md.SizeStr = util.FormatSize(md.Size)
+		}
+
+	}
+	return nil, md
+}
+
+func (this *MdController) pageHandle(ctx echo.Context) error {
 	data := map[string]interface{}{}
 
+	//路由逻辑
+	mUrlpath := ctx.Request().URL.Path[1:]
+	// fmt.Println("====", mUrlpath)
+
+	mMarkdown := new(mdInfo)
+	if util.IsHtmlFile(mUrlpath) {
+		fileName := path.Join(parse.EnvConfig.CmdRoot, strings.TrimSuffix(mUrlpath, ".html"))
+		err, rmd := this.readMarkdown(fileName + ".md")
+		if err == nil {
+			mMarkdown = rmd
+		}
+	}
+
+	//读取自定义配置数据
+	cfgFile := path.Join(parse.EnvConfig.CmdRoot, "fox.toml")
+	markdown.LoadConfigFromFile(cfgFile)
+
 	meta := make([]*TitleMeta, 0)
-	// meta.Title="你好"
 	m1 := new(TitleMeta)
 	m1.Name = "aaa"
 	meta = append(meta, m1)
@@ -128,6 +198,8 @@ func (MdController) Editor(ctx echo.Context) error {
 	//读取本地文件
 	_, fileList := scan(parse.EnvConfig.CmdRoot)
 	data["fileList"] = fileList
+	data["markdown"] = mMarkdown
+	//data["cfg"]=cfg
 	return render(ctx, pages, data)
 
 }

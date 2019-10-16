@@ -1,12 +1,14 @@
 package util
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
+
 	"github.com/zouhuigang/package/zfileutil"
 )
 
@@ -128,4 +130,51 @@ func scanDir(wg *sync.WaitGroup, rootPath string, c chan []zfileutil.FileList) {
 		filelist = append(filelist, f...)
 	}
 	c <- filelist
+}
+
+//判断是图片
+func IsCurstomStaticFile(filePath string) bool {
+	isSaticFile := false
+	mFileName := strings.ToLower(filePath)
+	mList := [...]string{".gif", ".jpg", ".jpeg", ".png", ".bmp", ".swf"}
+	for _, v := range mList {
+		if strings.HasSuffix(mFileName, v) {
+			isSaticFile = true
+			break
+		}
+	}
+	return isSaticFile
+}
+
+//拦截html
+func IsHtmlFile(filePath string) bool {
+	isHtmlFile := false
+	mFileName := strings.ToLower(filePath)
+	if strings.HasSuffix(mFileName, ".html") {
+		isHtmlFile = true
+	}
+	return isHtmlFile
+}
+
+func FormatSize(s int64) string {
+	const (
+		_          = iota // ignore first value by assigning to blank identifier
+		kb float64 = 1 << (10 * iota)
+		mb
+		gb
+		tb
+	)
+	b := float64(s)
+	switch {
+	case b >= tb:
+		return fmt.Sprintf("%.2fTB", b/tb)
+	case b >= gb:
+		return fmt.Sprintf("%.2fGB", b/gb)
+	case b >= mb:
+		return fmt.Sprintf("%.2fMB", b/mb)
+	case b >= kb:
+		return fmt.Sprintf("%.2fKB", b/kb)
+	default:
+		return fmt.Sprintf("%dB", s)
+	}
 }

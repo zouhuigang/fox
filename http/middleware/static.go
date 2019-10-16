@@ -5,7 +5,7 @@ package middleware
 
 import (
 	"fox/system"
-	"strings"
+	"fox/util"
 
 	"github.com/labstack/echo"
 )
@@ -16,20 +16,6 @@ func getAccept(ctx echo.Context) string {
 	}
 
 	return ""
-}
-
-//判断是图片
-func isCurstomStaticFile(filePath string) bool {
-	isSaticFile := false
-	mFileName := strings.ToLower(filePath)
-	mList := [...]string{".gif", ".jpg", ".jpeg", ".png", ".bmp", ".swf"}
-	for _, v := range mList {
-		if strings.HasSuffix(mFileName, v) {
-			isSaticFile = true
-			break
-		}
-	}
-	return isSaticFile
 }
 
 //检测静态资源
@@ -49,11 +35,19 @@ func CheckStatic() echo.MiddlewareFunc {
 					return system.ResponeJson(ctx, system.ErrUnknown, data, "错误的文件类型")
 				}
 				mUrlpath := ctx.Request().URL.Path[1:]
+				// fmt.Println(mUrlpath)
 
 				//文件代理
-				if isCurstomStaticFile(mUrlpath) {
+				if util.IsCurstomStaticFile(mUrlpath) {
 					return ctx.File(mUrlpath)
 				}
+
+				// //html代理路由
+				// if isHtmlFile(mUrlpath) {
+				// 	ctx.GET("/*", func(c echo.Context) error {
+				// 		return c.String(http.StatusOK, "/users/1/files/*")
+				// 	})
+				// }
 
 			}
 
