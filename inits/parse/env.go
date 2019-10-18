@@ -37,6 +37,7 @@ type MyEnv struct {
 	CmdCfg   config.Provider //命令行输入的命令
 	ThemeDir string          //主题目录
 	Theme    string          //主题
+	ConfigData map[string]interface{} //数据
 	Env      struct {
 		Weburl      string `yaml:"weburl"`
 		TemplateDir string `yaml:"template_dir"`
@@ -113,10 +114,15 @@ func EnvParse(cmdCfg config.Provider, defaultTheme string) {
 		EnvConfig.ThemeDir = mGlobalTheme + "/"
 	}
 
+
+	//读取自定义数据
+	EnvConfig.ConfigData = cmdCfg.GetStringMap(defaultTheme)
+
 	fmt.Printf("%s%s\n", banner, EnvConfig.Env.Github)
 	golog.Info("Root path:" + EnvConfig.Root)
 	golog.Info("CmdRoot path:" + EnvConfig.CmdRoot)
 	golog.Info("theme dir:" + EnvConfig.ThemeDir)
 	golog.Info("version:" + EnvConfig.Env.Version)
+	//golog.Info("config:" + cmdCfg.GetStringSlice("gitbook"))
 
 }

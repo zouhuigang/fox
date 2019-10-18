@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -177,4 +178,9 @@ func FormatSize(s int64) string {
 	default:
 		return fmt.Sprintf("%dB", s)
 	}
+}
+
+//返回扩展名称，不包括.,例如:config.toml返回toml
+func ExtNoDelimiter(in string) string {
+	return strings.TrimPrefix(path.Ext(in), ".")
 }

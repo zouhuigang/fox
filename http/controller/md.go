@@ -15,7 +15,7 @@ import (
 	"os"
 	"strings"
 
-	"fox/model/markdown"
+	//"fox/model/markdown"
 
 	"github.com/labstack/echo"
 	"github.com/microcosm-cc/bluemonday"
@@ -174,8 +174,9 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 	}
 
 	//读取自定义配置数据
-	cfgFile := path.Join(parse.EnvConfig.CmdRoot, "fox.toml")
-	markdown.LoadConfigFromFile(cfgFile)
+	// cfgFile := path.Join(parse.EnvConfig.CmdRoot, "fox.toml")
+	// markdown.LoadConfigFromFile(cfgFile)
+	// configData=
 
 	meta := make([]*TitleMeta, 0)
 	m1 := new(TitleMeta)
@@ -199,7 +200,7 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 	_, fileList := scan(parse.EnvConfig.CmdRoot)
 	data["fileList"] = fileList
 	data["markdown"] = mMarkdown
-	//data["cfg"]=cfg
+	data["cfg"]=parse.EnvConfig.ConfigData
 	return render(ctx, pages, data)
 
 }

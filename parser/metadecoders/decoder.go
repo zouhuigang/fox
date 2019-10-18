@@ -15,6 +15,10 @@ import (
 	"github.com/spf13/cast"
 	jww "github.com/spf13/jwalterweatherman"
 	yaml "gopkg.in/yaml.v2"
+	"io/ioutil"
+	"os"
+
+	"github.com/zouhuigang/package/zfile"
 )
 
 // Decoder provides some configuration options for the decoders.
@@ -55,18 +59,30 @@ func (d Decoder) UnmarshalToMap(data []byte, f Format) (map[string]interface{}, 
 
 // UnmarshalFileToMap is the same as UnmarshalToMap, but reads the data from
 // the given filename.
-// func (d Decoder) UnmarshalFileToMap(fs afero.Fs, filename string) (map[string]interface{}, error) {
-// 	format := FormatFromString(filename)
-// 	if format == "" {
-// 		return nil, errors.Errorf("%q is not a valid configuration format", filename)
-// 	}
+func (d Decoder) UnmarshalFileToMap( filename string) (map[string]interface{}, error) {
+	format := FormatFromString(filename)
+	if format == "" {
+		return nil, errors.Errorf("%q is not a valid configuration format", filename)
+	}
 
-// 	data, err := afero.ReadFile(fs, filename)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return d.UnmarshalToMap(data, format)
-// }
+	if !zfile.IsFileExist(filename){
+		return nil,errors.Errorf("%q not exist", filename)
+	}
+
+	fi, err := os.Open(filename)
+	if err != nil {
+		return nil,err
+	}
+	defer fi.Close()
+
+	data, err := ioutil.ReadAll(fi)
+	if err != nil {
+		return nil,err
+	}
+
+	
+	return d.UnmarshalToMap(data, format)
+}
 
 // UnmarshalStringTo tries to unmarshal data to a new instance of type typ.
 func (d Decoder) UnmarshalStringTo(data string, typ interface{}) (interface{}, error) {

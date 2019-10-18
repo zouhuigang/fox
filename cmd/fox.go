@@ -1,6 +1,10 @@
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"fox/config"
+
+	"github.com/spf13/cobra"
+)
 
 type foxCmd struct {
 	*baseBuilderCmd
@@ -33,6 +37,10 @@ func (b *commandsBuilder) newFoxCmd() *foxCmd {
 	})
 
 	//cc.cmd.PersistentFlags().BoolVar(&cc.quiet, "quiet", false, "build in quiet mode")
+	//用户自定义配置
+	cc.command.PersistentFlags().StringVar(&cc.cfgFile, "config", "", "config file (default is path/config.yaml|json|toml)")
+	// Set bash-completion
+	_ = cc.command.PersistentFlags().SetAnnotation("config", cobra.BashCompFilenameExt, config.ValidConfigFileExtensions)
 
 	return cc
 }

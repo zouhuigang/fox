@@ -2,14 +2,35 @@ package config
 
 import (
 	"path/filepath"
-
+"fmt"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 )
 
-func LoadConfig(doWithConfig ...func(cfg Provider) error) (*viper.Viper, error) {
+//加载配置
+func LoadConfig(d ConfigSourceDescriptor, doWithConfig ...func(cfg Provider) error) (*viper.Viper, error) {
 	var v *viper.Viper = viper.New()
 
+	//用户自定义配置文件
+	var configFiles []string
+	l := configLoader{ConfigSourceDescriptor: d}
+	for _, name := range d.configFilenames() {
+		var filename string
+		filename, err := l.loadConfig(name, v)
+		if err == nil {
+			configFiles = append(configFiles, filename)
+		} else if err != ErrNoConfigFile {
+			return nil, err
+		}
+	}
+
+	if err := loadDefaultSettingsFor(v); err != nil {
+		return v, err
+	}
+
+	fmt.Println("configFiles:",configFiles)
+
+	//系统的回调配置
 	for _, d := range doWithConfig {
 		if err := d(v); err != nil {
 			return v, err

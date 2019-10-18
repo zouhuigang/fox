@@ -35,6 +35,8 @@ type foxBuilderCommon struct {
 	source      string
 	baseURL     string
 	environment string
+	cfgFile     string //用户自定义配置文件
+	cfgDir      string //用户自定义配置文件目录
 }
 
 type commandeer struct {

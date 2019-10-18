@@ -10,3 +10,7 @@ go.sum
 util/file_s.go__
 
 fox.theme/
+
+util/test.go_
+
+*.sum

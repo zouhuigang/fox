@@ -50,7 +50,7 @@ func (c *commandeer) loadConfig(mustHaveConfigFile, running bool) error {
 	}
 
 	//写入配置
-	config, err := config.LoadConfig(doWithCommandeer, doWithConfig)
+	config, err := config.LoadConfig(config.ConfigSourceDescriptor{Filename: c.h.cfgFile}, doWithCommandeer, doWithConfig)
 	if err != nil {
 		return err
 	}
@@ -58,6 +58,9 @@ func (c *commandeer) loadConfig(mustHaveConfigFile, running bool) error {
 	config.Set("fox_env_test", "fox env test success")
 	// s := config.GetString("fox_env_test")
 	// fmt.Printf("=============%s\n", s)
+
+	//加载用户自定义的配置文件
+	// fmt.Println("加载用户自定义配置", c.h.cfgFile)
 	return nil
 }
 

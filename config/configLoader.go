@@ -7,6 +7,11 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	ValidConfigFileExtensions                    = []string{"toml", "yaml", "yml", "json"}
+	validConfigFileExtensionsMap map[string]bool = make(map[string]bool)
+)
+
 var keyAliases maps.KeyRenamer
 
 func init() {
@@ -46,14 +51,18 @@ func readConfig(format metadecoders.Format, data []byte) (map[string]interface{}
 
 }
 
-// func loadConfigFromFile(fs afero.Fs, filename string) (map[string]interface{}, error) {
-// 	m, err := metadecoders.Default.UnmarshalFileToMap(fs, filename)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	RenameKeys(m)
-// 	return m, nil
-// }
+func FromFileToMap(filename string) (map[string]interface{}, error) {
+	return loadConfigFromFile(filename)
+}
+
+func loadConfigFromFile(filename string) (map[string]interface{}, error) {
+	m, err := metadecoders.Default.UnmarshalFileToMap(filename)
+	if err != nil {
+		return nil, err
+	}
+	RenameKeys(m)
+	return m, nil
+}
 
 func RenameKeys(m map[string]interface{}) {
 	keyAliases.Rename(m)
@@ -61,6 +70,5 @@ func RenameKeys(m map[string]interface{}) {
 
 func newViper() *viper.Viper {
 	v := viper.New()
-
 	return v
 }
