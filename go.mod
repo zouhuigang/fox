@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/BurntSushi/toml v0.3.1
+	github.com/dlclark/regexp2 v1.2.0
 	github.com/gobwas/glob v0.2.3
 	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect
 	github.com/kataras/pio v0.0.0-20190103105442-ea782b38602d // indirect

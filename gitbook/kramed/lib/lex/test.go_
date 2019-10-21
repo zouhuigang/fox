@@ -1,0 +1,25 @@
+package main
+
+import (
+	"fmt"
+	//"regexp"
+	"fox/gitbook/kramed/zregexp"
+
+	regexp2 "github.com/dlclark/regexp2"
+)
+
+//https://github.com/robertkrimen/otto
+//https://stackoverflow.com/questions/43586091/how-golang-replace-string-by-regex-group
+//https://blog.csdn.net/guyan0319/article/details/87873070
+//http://outofmemory.cn/code-snippet/2092/usage-golang-regular-expression-regexp-quchu-HTML-CSS-SCRIPT-code-jin-maintain-page-wenzi
+//https://stackoverflow.com/questions/41871841/javascript-regex-to-check-if-first-and-last-character-are-similar
+func main() {
+	src := `mgfffffabcd
+
+	smgs`
+	s := zregexp.GroupExec2(regexp2.MustCompile(`^(m)(g)[\s\S]*\2$`, 1), src)
+	for _, v := range s {
+		//type: 'heading', depth: 1, text: 'Summary'
+		fmt.Printf("%v\n", v)
+	}
+}
