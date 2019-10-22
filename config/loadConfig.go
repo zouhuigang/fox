@@ -1,8 +1,9 @@
 package config
 
 import (
+	"fmt"
 	"path/filepath"
-"fmt"
+
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 )
@@ -28,7 +29,7 @@ func LoadConfig(d ConfigSourceDescriptor, doWithConfig ...func(cfg Provider) err
 		return v, err
 	}
 
-	fmt.Println("configFiles:",configFiles)
+	fmt.Println("configFiles:", configFiles)
 
 	//系统的回调配置
 	for _, d := range doWithConfig {
@@ -40,7 +41,7 @@ func LoadConfig(d ConfigSourceDescriptor, doWithConfig ...func(cfg Provider) err
 	return v, nil
 }
 
-//动态读取配置
+//动态读取固定配置
 var DefaultModuleConfig = Config{}
 
 type Import struct {

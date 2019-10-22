@@ -4,21 +4,26 @@ import (
 	"fmt"
 	gitbookMarkdown "fox/gitbook/gitbook-markdown/lib"
 	"net/url"
+	"strings"
 )
 
 type NSummary struct {
 	Title string //"Introduction"
+	Type  string
 	Path  string //"README.md"
 	Level string //"0","1","1.1"
 	// exists       bool //文件是否存在
-	External     bool //是否是外部链接
-	Introduction bool //是否是介绍页
+	External     bool   //是否是外部链接
+	Href         string //链接地址
+	Introduction bool   //是否是介绍页
 	Articles     []*NSummary
 }
 
 type Options struct {
 	EntryPoint      string //入口页
 	EntryPointTitle string //入口标题
+	HrefSuffix      string //将.md替换成.html
+	Depth           int    //是否显示heading，0不显示,1显示#,2显示##，即:# 标题1 ## 标题2
 	//     files: null
 }
 
@@ -58,13 +63,19 @@ func normalizeChapters(chapterList []*gitbookMarkdown.Summary, options *Options,
 		if chapter.Path == options.EntryPoint {
 			introduction = true
 		}
-
+		//fmt.Println("===", chapter.Title)
 		item := new(NSummary)
+		item.Type = chapter.Type
 		item.Level = level
 		item.Path = chapter.Path
 		item.Title = chapter.Title
 		item.Introduction = introduction
 		item.External = isExternal(chapter.Path)
+		if item.External {
+			item.Href = chapter.Path
+		} else {
+			item.Href = fmt.Sprintf("%s%s", strings.TrimSuffix(chapter.Path, ".md"), options.HrefSuffix)
+		}
 
 		if len(chapter.Articles) > 0 {
 			dataList1 := normalizeChapters(chapter.Articles, options, level, 1)
@@ -82,9 +93,11 @@ func NormalizeSummary(src string, options *Options) []*NSummary {
 		options = new(Options)
 		options.EntryPoint = "README.md"
 		options.EntryPointTitle = "Introduction"
+		options.HrefSuffix = ".html"
+		options.Depth = 2
 	}
 
-	sumList := gitbookMarkdown.ParseSummary(src)
+	sumList := gitbookMarkdown.ParseSummary(src, options.Depth)
 	nSumList := normalizeChapters(sumList, options, "", 0)
 	return nSumList
 }

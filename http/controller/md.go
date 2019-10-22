@@ -15,10 +15,11 @@ import (
 	"os"
 	"strings"
 
-	//"fox/model/markdown"
+	"fox/model/markdown"
 
 	"github.com/labstack/echo"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/mitchellh/mapstructure"
 	"github.com/russross/blackfriday"
 	"github.com/zouhuigang/package/zfile"
 	"github.com/zouhuigang/package/ztime"
@@ -173,11 +174,6 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 		}
 	}
 
-	//读取自定义配置数据
-	// cfgFile := path.Join(parse.EnvConfig.CmdRoot, "fox.toml")
-	// markdown.LoadConfigFromFile(cfgFile)
-	// configData=
-
 	meta := make([]*TitleMeta, 0)
 	m1 := new(TitleMeta)
 	m1.Name = "aaa"
@@ -196,11 +192,30 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 		}
 	}
 
+	//自定义配置
+	cfg := parse.EnvConfig.ConfigData
+
+	//目录
+	c := markdown.GitBookSystem{}
+	if err := mapstructure.WeakDecode(cfg["system"], &c); err != nil {
+		data["error_title"] = "解析用户配置失败"
+		data["error_description"] = err.Error()
+		return renderError(ctx, data)
+	}
+
+	err,summary:=markdown.ParseSummary(c.Summary)
+	if err !=nil{
+		data["error_title"] = "解析目录失败"
+		data["error_description"] = err.Error()
+		return renderError(ctx, data)
+	}
+
 	//读取本地文件
 	_, fileList := scan(parse.EnvConfig.CmdRoot)
 	data["fileList"] = fileList
 	data["markdown"] = mMarkdown
-	data["cfg"]=parse.EnvConfig.ConfigData
+	data["cfg"] = cfg
+	data["summary"] = summary
 	return render(ctx, pages, data)
 
 }
