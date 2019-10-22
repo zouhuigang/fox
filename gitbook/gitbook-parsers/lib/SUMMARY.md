@@ -11,3 +11,4 @@
   * [ebook-convert](build/ebookconvert.md)
 * [GitHub Integration](github/README.md)
    * [Transferring content to GitHub](github/transferring_to_github.md)
+   * [baidu](https://www.baidu.com)

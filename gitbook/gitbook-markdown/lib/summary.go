@@ -1,10 +1,8 @@
-package main
+package lib
 
 import (
-	"fmt"
 	"fox/gitbook/kramed"
 	"fox/gitbook/kramed/lib/lex"
-	"io/ioutil"
 )
 
 func skipSpace(nodes []*lex.Token) []*lex.Token {
@@ -117,19 +115,4 @@ func ParseSummary(src string) []*Summary {
 	}
 
 	return sumList
-}
-
-func main() {
-	//读取文件内容
-	f, _ := ioutil.ReadFile("SUMMARY.md")
-
-	md := string(f)
-	s := ParseSummary(md)
-	for _, v := range s {
-		//type: 'heading', depth: 1, text: 'Summary'
-		fmt.Printf("title:%s,path:%s,articles:%v\n", v.Title, v.Path, v.Articles)
-		for _, v1 := range v.Articles {
-			fmt.Printf("======title1:%s,path1:%s,articles1:%v\n", v1.Title, v1.Path, v1.Articles)
-		}
-	}
 }
