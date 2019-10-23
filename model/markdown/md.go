@@ -43,9 +43,17 @@ func LoadConfigFromFile(fileName string) error {
 
 }
 
-type GitBookSystem struct {
-	Summary string //目录路径
+type Sidebar struct {
+	Title string
+	Link  string
+}
 
+type GitBookSystem struct {
+	Summary    string    //目录路径
+	EntryPoint string    //入口页面
+	LinkTitle  string    //底部
+	Link       string    //链接
+	Sidebars   []Sidebar //home
 }
 
 //解析目录

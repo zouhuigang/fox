@@ -10,10 +10,24 @@ import (
 
 //主题
 type Theme struct {
-	Template *ThemeTemplate
+	Plugins       *Plugins
+	PluginsConfig *PluginsConfig
 }
-type ThemeTemplate struct {
+type Plugins struct {
+	Modules []string
+}
+
+type PluginsConfig struct {
+	Pages   *M_pages
+	Summary *M_summary
+}
+
+//模块配置
+type M_pages struct {
 	Pages []string
+}
+
+type M_summary struct {
 }
 
 var (

@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"fox/system"
 	"io/ioutil"
 	"path"
@@ -16,6 +15,7 @@ import (
 	"strings"
 
 	"fox/model/markdown"
+	"fox/model/modules"
 
 	"github.com/labstack/echo"
 	"github.com/microcosm-cc/bluemonday"
@@ -163,7 +163,8 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 
 	//路由逻辑
 	mUrlpath := ctx.Request().URL.Path[1:]
-	// fmt.Println("====", mUrlpath)
+	//自定义配置
+	cfg := parse.EnvConfig.ConfigData
 
 	mMarkdown := new(mdInfo)
 	if util.IsHtmlFile(mUrlpath) {
@@ -182,18 +183,17 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 	data["meta"] = meta
 	data["flinks"] = "ass"
 
-	//页面
-	var pages string
-	for index, page := range parse.ThemeConfig.Template.Pages {
-		if index == 0 {
-			pages = fmt.Sprintf("%s", page)
-		} else {
-			pages = fmt.Sprintf("%s,%s", pages, page)
+	//加载模块数据
+	modulesList := modules.LoadModules()
+	for _,modules:=range modulesList{
+		if modules.Err !=nil{
+			data["error_title"] = fmt.Sprintf("加载模块[%s]失败",modules.Name)
+			data["error_description"] = err.Error()
+			return renderError(ctx, data)
 		}
-	}
+		
 
-	//自定义配置
-	cfg := parse.EnvConfig.ConfigData
+	}
 
 	//目录
 	c := markdown.GitBookSystem{}
@@ -203,11 +203,20 @@ func (this *MdController) pageHandle(ctx echo.Context) error {
 		return renderError(ctx, data)
 	}
 
-	err,summary:=markdown.ParseSummary(c.Summary)
-	if err !=nil{
+	err, summary := markdown.ParseSummary(c.Summary)
+	if err != nil {
 		data["error_title"] = "解析目录失败"
 		data["error_description"] = err.Error()
 		return renderError(ctx, data)
+	}
+
+	//首页数据
+	if mUrlpath == "" {
+		fileName := path.Join(parse.EnvConfig.CmdRoot, c.EntryPoint)
+		err, rmd := this.readMarkdown(fileName)
+		if err == nil {
+			mMarkdown = rmd
+		}
 	}
 
 	//读取本地文件

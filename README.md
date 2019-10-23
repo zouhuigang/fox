@@ -2,6 +2,8 @@
 
 ![images](./image/screen.png)
 
+![images](./image/screen2.png)
+
 
 ### 1.下载安装fox,并加入环境变量。
 

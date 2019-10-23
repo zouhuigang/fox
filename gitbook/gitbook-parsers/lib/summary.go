@@ -55,15 +55,23 @@ func getLevel(preLevel string, index int) string {
 func normalizeChapters(chapterList []*gitbookMarkdown.Summary, options *Options, preLevel string, base int) []*NSummary {
 	dataList := make([]*NSummary, 0)
 
-	for index, chapter := range chapterList {
-		index = base + index
-		level := getLevel(preLevel, index)
+	headNum := 0
+	index := base - 1
+	for _, chapter := range chapterList {
+		if chapter.Type == "heading" {
+			headNum = headNum + 1
+			preLevel = getLevel("", headNum)
+			index = 0
+		} else {
+			index++
+		}
 
+		level := getLevel(preLevel, index)
 		var introduction bool = false
 		if chapter.Path == options.EntryPoint {
 			introduction = true
 		}
-		//fmt.Println("===", chapter.Title)
+		// fmt.Println("===", chapter.Title, index, headNum)
 		item := new(NSummary)
 		item.Type = chapter.Type
 		item.Level = level
@@ -94,7 +102,7 @@ func NormalizeSummary(src string, options *Options) []*NSummary {
 		options.EntryPoint = "README.md"
 		options.EntryPointTitle = "Introduction"
 		options.HrefSuffix = ".html"
-		options.Depth = 2
+		options.Depth = 2 //显示heading的级别，2代表显示##
 	}
 
 	sumList := gitbookMarkdown.ParseSummary(src, options.Depth)
