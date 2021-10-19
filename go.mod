@@ -11,7 +11,7 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/magiconair/properties v1.8.1 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.2
+	github.com/microcosm-cc/bluemonday v1.0.16
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/niklasfasching/go-org v0.1.4
 	github.com/pelletier/go-toml v1.4.0 // indirect
@@ -30,8 +30,6 @@ require (
 	github.com/zouhuigang/package v0.0.0-20190928004120-6174f77677ed
 	github.com/zouhuigang/package/ztime v0.0.0-20190928004120-6174f77677ed
 	golang.org/x/crypto v0.0.0-20190422183909-d864b10871cd // indirect
-	golang.org/x/net v0.0.0-20190606173856-1492cefac77f // indirect
-	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.2
 )
