@@ -29,7 +29,7 @@ require (
 	github.com/zouhuigang/golog v0.0.0-20190624001437-99c81de45f40
 	github.com/zouhuigang/package v0.0.0-20190928004120-6174f77677ed
 	github.com/zouhuigang/package/ztime v0.0.0-20190928004120-6174f77677ed
-	golang.org/x/crypto v0.0.0-20190422183909-d864b10871cd // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v2 v2.2.2
 )
